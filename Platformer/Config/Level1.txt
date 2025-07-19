@@ -1,0 +1,53 @@
+// Format : <Entity Type> <Animation Name> <X-Position> <Y-Position>
+Tile        Brick   -1  6
+Tile        Brick   -1  7
+Tile        Brick   -1  8
+Tile        Brick   -1  9
+Tile        Brick   -1  10
+Tile        Brick   -1  11
+Tile        Brick   0   11
+Tile        Brick   1   11
+Tile        Brick   2   11
+Tile        Brick   3   11
+Tile        Brick   4   11
+Tile        Brick   5   11
+Tile        Brick   6   11
+Tile        Brick   7   11
+Tile        Brick   8   11
+Tile        Brick   9   11
+Tile        Brick   10  11
+Tile        Brick   11  11
+Tile        Brick   12  11
+Tile        Brick   16  11
+Tile        Brick   17  11
+Tile        Brick   18  11
+Tile        Brick   19  11
+Tile        Brick   20  11
+Tile        Brick   3   9
+Tile        Brick   4   9
+Tile        Brick   5   9
+Tile        Brick   6   6
+Tile        Brick   7   6
+Tile        Brick   13  15
+Tile        Brick   14  15
+Tile        Brick   15  15
+Tile        Brick   12  12
+Tile        Brick   12  13
+Tile        Brick   12  14
+Tile        Brick   12  15
+Tile        Brick   16  12
+Tile        Brick   16  13
+Tile        Brick   16  14
+Tile        Brick   16  15
+Tile        Pipe    10  8
+Decoration  Grass   2   10
+Decoration  Grass   6   10
+Decoration  Grass   7   10
+Decoration  Grass   6   5
+Decoration  Grass   18  10
+
+// Format : Gravity <Gravity>
+Gravity 0.9
+
+// Format : Player <Animation Name> <X-Position> <Y-Position> <Run Speed> <Jump Speed>
+Player Robot 0 8 5.5 -20
