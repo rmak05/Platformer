@@ -36,4 +36,5 @@ public:
     void update_and_set_views(sf::RenderWindow& game_window) override;
 
     void spawn_player();
+    void spawn_bullet();
 };

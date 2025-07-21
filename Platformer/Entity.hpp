@@ -59,7 +59,7 @@ public:
 	void transform();
 	void transform_after_collision();
 	void update_animation();
-	void draw(sf::RenderWindow& game_window) const;
+	void draw(sf::RenderWindow& game_window, bool display_shape, bool display_box) const;
 };
 
 template<typename T, typename... TArgs>

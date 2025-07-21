@@ -58,14 +58,14 @@ void Entity::update_animation() {
 	_cshape.update_animation();
 }
 
-void Entity::draw(sf::RenderWindow& game_window) const {
+void Entity::draw(sf::RenderWindow& game_window, bool display_shape, bool display_box) const {
 	if (has_component<CShape>()) {
 		auto& _cshape = get_component<CShape>();
-		_cshape.draw(game_window);
+		_cshape.draw(game_window, display_shape);
 	}
 
 	if (has_component<CBoundingBox>()) {
 		auto& _cboundingbox = get_component<CBoundingBox>();
-		_cboundingbox.draw(game_window);
+		_cboundingbox.draw(game_window, display_box);
 	}
 }

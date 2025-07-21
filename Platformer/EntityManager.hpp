@@ -11,6 +11,8 @@ private:
 	std::vector<entity_ptr>					all_entities;
 	std::vector<std::vector<entity_ptr>>	sorted_entities; 
 	std::vector<entity_ptr>					entites_to_add;
+	bool									display_textures;
+	bool									display_bounding_boxes;
 
 public:
 	EntityManager();

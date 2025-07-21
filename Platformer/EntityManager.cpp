@@ -1,8 +1,10 @@
 #include "EntityManager.hpp"
 
 EntityManager::EntityManager() {
-	entity_count	= 0u;
-	sorted_entities = std::vector<std::vector<entity_ptr>>((size_t)EntityType::count);
+	entity_count			= 0u;
+	sorted_entities			= std::vector<std::vector<entity_ptr>>((size_t)EntityType::count);
+	display_textures		= true;
+	display_bounding_boxes	= false;
 }
 
 void EntityManager::delete_inactive_entities(std::vector<entity_ptr>& entity_vec) {
@@ -56,6 +58,9 @@ void EntityManager::resolve_collisions() {
 			if(!_entity1->is_active()) break;
 			if(!_entity2->is_active()) continue;
 			if(_entity1->get_id() == _entity2->get_id()) continue;
+			// TODO: remove these lines
+			if(_entity1->get_type() == EntityType::bullet) break;
+			if(_entity2->get_type() == EntityType::bullet) continue;
 
 			sf::Vector2f prev_overlap = Collision::prev_overlap(_entity1, _entity2);
 			sf::Vector2f curr_overlap = Collision::curr_overlap(_entity1, _entity2);
@@ -120,30 +125,20 @@ void EntityManager::update_animations() {
 }
 
 void EntityManager::toggle_box_display() {
-	for (auto& _entity : all_entities) {
-		if (_entity->has_component<CBoundingBox>()) {
-			auto& _cboundingbox			= _entity->get_component<CBoundingBox>();
-			_cboundingbox.display_box	= (!_cboundingbox.display_box);
-		}
-	}
+	display_bounding_boxes = !display_bounding_boxes;
 }
 
 void EntityManager::toggle_texture_display() {
-	for (auto& _entity : all_entities) {
-		if (_entity->has_component<CShape>()) {
-			auto& _cshape			= _entity->get_component<CShape>();
-			_cshape.display_shape	= (!_cshape.display_shape);
-		}
-	}
+	display_textures = !display_textures;
 }
 
 void EntityManager::draw_entities(sf::RenderWindow& game_window) const {
 	// improve this logic
 
 	for (auto& _entity : all_entities) {
-		if(_entity->get_type() == EntityType::decoration) _entity->draw(game_window);
+		if(_entity->get_type() == EntityType::decoration) _entity->draw(game_window, display_textures, display_bounding_boxes);
 	}
 	for (auto& _entity : all_entities) {
-		if(_entity->get_type() != EntityType::decoration) _entity->draw(game_window);
+		if(_entity->get_type() != EntityType::decoration) _entity->draw(game_window, display_textures, display_bounding_boxes);
 	}
 }

@@ -29,6 +29,7 @@ void LevelScene::initialise() {
 	register_action(sf::Keyboard::Up,		ActionName::jump);
 	register_action(sf::Keyboard::Left,		ActionName::left);
 	register_action(sf::Keyboard::Right,	ActionName::right);
+	register_action(sf::Keyboard::Q,		ActionName::shoot);
 
 	register_action(sf::Keyboard::Escape,	ActionName::quit);
 	register_action(sf::Keyboard::B,		ActionName::debug_box);
@@ -95,7 +96,7 @@ void LevelScene::do_action(Action _action) {
 	// TODO: complete this
 
 	switch (_action.get_name()) {
-		case ActionName::jump : {
+		case ActionName::jump: {
 			// shouldn't be able to jump if in air
 			// can do this by checking if vertical velocity is zero
 			
@@ -107,7 +108,7 @@ void LevelScene::do_action(Action _action) {
 			break;
 		}
 
-		case ActionName::left : {
+		case ActionName::left: {
 			auto& _cmotion = player_ptr->get_component<CMotion>();
 			if		(_action.get_type() == ActionType::start) {
 				_cmotion.velocity.x = (-player_config.run_velocity);
@@ -119,7 +120,7 @@ void LevelScene::do_action(Action _action) {
 			break;
 		}
 
-		case ActionName::right : {
+		case ActionName::right: {
 			auto& _cmotion = player_ptr->get_component<CMotion>();
 			if		(_action.get_type() == ActionType::start) {
 				_cmotion.velocity.x = (player_config.run_velocity);
@@ -131,7 +132,15 @@ void LevelScene::do_action(Action _action) {
 			break;
 		}
 
-		case ActionName::debug_box : {
+		case ActionName::shoot: {
+			if (_action.get_type() == ActionType::start) {
+				spawn_bullet();
+			}
+
+			break;
+		}
+
+		case ActionName::debug_box: {
 			if (_action.get_type() == ActionType::start) {
 				entity_manager.toggle_box_display();
 			}
@@ -139,7 +148,7 @@ void LevelScene::do_action(Action _action) {
 			break;
 		}
 
-		case ActionName::debug_texture : {
+		case ActionName::debug_texture: {
 			if (_action.get_type() == ActionType::start) {
 				entity_manager.toggle_texture_display();
 			}
@@ -147,7 +156,7 @@ void LevelScene::do_action(Action _action) {
 			break;
 		}
 
-		default : {
+		default: {
 			break;
 		}
 	}
@@ -169,4 +178,17 @@ void LevelScene::spawn_player() {
 	player_ptr->set_component<CBoundingBox>(player_config.player_animation.get_scaled_size());
 
 	player_ptr->set_component<CMotion>(sf::Vector2f(0.0f, 0.0f), sf::Vector2f(0.0f, gravity));
+}
+
+void LevelScene::spawn_bullet() {
+	entity_ptr _bullet		= add_entity(EntityType::bullet);
+	Animation _animation	= all_assets.get_animation("Brick");
+
+	_bullet->set_component<CShape>(_animation);
+
+	_bullet->set_component<CTransform>(player_ptr->get_component<CTransform>().curr_position);
+
+	_bullet->set_component<CBoundingBox>(_animation.get_scaled_size());
+
+	_bullet->set_component<CMotion>(sf::Vector2f(10.0f, 0.0f), sf::Vector2f(0.0f, 0.0f));
 }

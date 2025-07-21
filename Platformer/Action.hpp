@@ -11,6 +11,7 @@ enum class ActionName {
 	jump,
 	up,
 	down,
+	shoot,
 	quit,
 	pause,
 	debug_box,

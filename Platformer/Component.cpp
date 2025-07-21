@@ -18,13 +18,10 @@ CTransform::CTransform(float _x, float _y) : Component() {
 	curr_position	= prev_position; 
 }
 
-CShape::CShape() : Component() {
-	display_shape = true;
-}
+CShape::CShape() : Component() {}
 
 CShape::CShape(const Animation _shape) : Component() {
 	shape			= _shape;
-	display_shape	= true;
 }
 
 void CShape::set_position(sf::Vector2f _position) {
@@ -35,20 +32,17 @@ void CShape::update_animation() {
 	shape.update();
 }
 
-void CShape::draw(sf::RenderWindow& game_window) const {
+void CShape::draw(sf::RenderWindow& game_window, bool display_shape) const {
 	if (display_shape) {
 		shape.draw(game_window);
 	}
 }
 
-CBoundingBox::CBoundingBox() : Component() {
-	display_box = false;
-}
+CBoundingBox::CBoundingBox() : Component() {}
 
 CBoundingBox::CBoundingBox(const sf::Vector2f& _size) : Component() {
 	box_size	= _size;
 	half_size	= box_size / 2.0f;
-	display_box	= false;
 	box.setSize(_size);
 	box.setOrigin(half_size);
 	box.setFillColor(sf::Color(0xffffff00));
@@ -60,7 +54,7 @@ void CBoundingBox::set_position(sf::Vector2f _position) {
 	box.setPosition(_position);
 }
 
-void CBoundingBox::draw(sf::RenderWindow& game_window) const {
+void CBoundingBox::draw(sf::RenderWindow& game_window, bool display_box) const {
 	if (display_box) {
 		game_window.draw(box);
 	}

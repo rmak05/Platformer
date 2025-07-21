@@ -27,9 +27,7 @@ void Scene::transform_entities() {
 }
 
 entity_ptr Scene::add_entity(const EntityType _type) {
-	auto _entity = entity_manager.add_entity(_type);
-
-	return _entity;
+	return entity_manager.add_entity(_type);
 }
 
 void Scene::delete_entity(entity_ptr& _entity) {

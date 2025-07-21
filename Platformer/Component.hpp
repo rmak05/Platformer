@@ -34,14 +34,13 @@ public:
 class CShape : public Component {
 public:
 	Animation shape;
-	bool display_shape;
 
 	CShape();
 	CShape(const Animation _shape);
 
 	void set_position(sf::Vector2f _position);
 	void update_animation();
-	void draw(sf::RenderWindow& game_window) const;
+	void draw(sf::RenderWindow& game_window, bool display_shape) const;
 };
 
 class CBoundingBox : public Component {
@@ -49,13 +48,12 @@ public:
 	sf::Vector2f box_size;
 	sf::Vector2f half_size;
 	sf::RectangleShape box;
-	bool display_box;
 
 	CBoundingBox();
 	CBoundingBox(const sf::Vector2f& _size);
 
 	void set_position(sf::Vector2f _position);
-	void draw(sf::RenderWindow& game_window) const;
+	void draw(sf::RenderWindow& game_window, bool display_box) const;
 };
 
 class CMotion : public Component {

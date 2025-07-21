@@ -7,8 +7,6 @@ Game::Game() {
 	curr_frame					= 0ll;
 	curr_scene					= SceneId::_default;
 	curr_level					= 1000000000;
-
-	//rand_gen = std::mt19937((unsigned)(std::chrono::steady_clock::now().time_since_epoch().count()));
 }
 
 void Game::initialise() {
@@ -88,13 +86,13 @@ void Game::run() {
 
 		while (game_window.pollEvent(_event)){
 			switch (_event.type) {
-				case sf::Event::EventType::Closed : {
+				case sf::Event::EventType::Closed: {
 					game_window.close();
 
 					break;
 				}
 
-				case sf::Event::EventType::MouseButtonPressed : {
+				case sf::Event::EventType::MouseButtonPressed: {
 					if (_event.mouseButton.button == sf::Mouse::Right) {
 						debug::update();
 					}
@@ -102,29 +100,29 @@ void Game::run() {
 					break;
 				}
 
-				case sf::Event::EventType::KeyPressed : {
+				case sf::Event::EventType::KeyPressed: {
 					ActionName _name = all_scenes[static_cast<int>(curr_scene)]->find_action(static_cast<int>(_event.key.code));
 					if(_name != ActionName::_default) all_scenes[static_cast<int>(curr_scene)]->do_action(Action(_name, ActionType::start));
 
 					break;
 				}
 
-				case sf::Event::EventType::KeyReleased : {
+				case sf::Event::EventType::KeyReleased: {
 					ActionName _name = all_scenes[static_cast<int>(curr_scene)]->find_action(static_cast<int>(_event.key.code));
 					if(_name != ActionName::_default) all_scenes[static_cast<int>(curr_scene)]->do_action(Action(_name, ActionType::end));
 
 					break;
 				}
 
-				default : {
+				default: {
 					break;
 				}
 			}
 		}
 
+		all_scenes[static_cast<int>(curr_scene)]->update_entities();
 		all_scenes[static_cast<int>(curr_scene)]->transform_entities();
 		all_scenes[static_cast<int>(curr_scene)]->resolve_collisions();
-		all_scenes[static_cast<int>(curr_scene)]->update_entities();
 		all_scenes[static_cast<int>(curr_scene)]->update_animations();
 		all_scenes[static_cast<int>(curr_scene)]->update_and_set_views(game_window);
 

@@ -2,13 +2,8 @@
 
 #include <iostream>
 #include <fstream>
-#include <random>
-#include <chrono>
-#include <sstream>
 #include <cstdlib>
 #include <vector>
-#include <map>
-//#include <ctime>
 #include <SFML/Graphics.hpp>
 #include "EntityManager.hpp"
 #include "Scene.hpp"
@@ -32,9 +27,6 @@ private:
 	std::vector<scene_ptr>	all_scenes;
 	SceneId					curr_scene;
 	int						curr_level;
-	//entity_ptr				player;
-	//std::mt19937			rand_gen;
-	//std::map<SceneId, scene_ptr>	scenes_map;
 	// bool paused;
 	// bool running;
 
