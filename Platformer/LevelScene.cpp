@@ -8,11 +8,20 @@ PlayerConfig::PlayerConfig() {
 }
 
 PlayerConfig::PlayerConfig(Animation _animation, float _pos_x, float _pos_y, float _run, float _jump) {
-	player_animation	=	_animation;
-	start_pos_x			=	_pos_x;
-	start_pos_y			=	_pos_y;
-	run_velocity		=	_run;
-	jump_velocity		=	_jump;
+	animation		=	_animation;
+	start_pos_x		=	_pos_x;
+	start_pos_y		=	_pos_y;
+	run_velocity	=	_run;
+	jump_velocity	=	_jump;
+}
+
+BulletConfig::BulletConfig() {
+	velocity = 0.0f;
+}
+
+BulletConfig::BulletConfig(Animation _animation, float _velocity) {
+	animation	= _animation;
+	velocity	= _velocity;
 }
 
 LevelScene::LevelScene(EntityManager& _entity_manager, SceneId _id, Asset& _assets, int& _level) : Scene(_entity_manager, _id, _assets), player_config(), level(_level) {
@@ -82,6 +91,9 @@ void LevelScene::initialise() {
 		}
 		else if (line_components[0] == "Player") {
 			player_config = PlayerConfig(all_assets.get_animation(line_components[1]), std::stof(line_components[2]), std::stof(line_components[3]), std::stof(line_components[4]), std::stof(line_components[5]));
+		}
+		else if (line_components[0] == "Bullet") {
+			bullet_config = BulletConfig(all_assets.get_animation(line_components[1]), std::stof(line_components[2]));
 		}
 	}
 
@@ -171,24 +183,23 @@ void LevelScene::update_and_set_views(sf::RenderWindow& game_window) {
 void LevelScene::spawn_player() {
 	player_ptr = add_entity(EntityType::player);
 
-	player_ptr->set_component<CShape>(player_config.player_animation);
+	player_ptr->set_component<CShape>(player_config.animation);
 
-	player_ptr->set_component<CTransform>(grid_to_mid_coord(sf::Vector2f(player_config.start_pos_x, player_config.start_pos_y), player_config.player_animation));
+	player_ptr->set_component<CTransform>(grid_to_mid_coord(sf::Vector2f(player_config.start_pos_x, player_config.start_pos_y), player_config.animation));
 
-	player_ptr->set_component<CBoundingBox>(player_config.player_animation.get_scaled_size());
+	player_ptr->set_component<CBoundingBox>(player_config.animation.get_scaled_size());
 
 	player_ptr->set_component<CMotion>(sf::Vector2f(0.0f, 0.0f), sf::Vector2f(0.0f, gravity));
 }
 
 void LevelScene::spawn_bullet() {
 	entity_ptr _bullet		= add_entity(EntityType::bullet);
-	Animation _animation	= all_assets.get_animation("Brick");
 
-	_bullet->set_component<CShape>(_animation);
+	_bullet->set_component<CShape>(bullet_config.animation);
 
 	_bullet->set_component<CTransform>(player_ptr->get_component<CTransform>().curr_position);
 
-	_bullet->set_component<CBoundingBox>(_animation.get_scaled_size());
+	_bullet->set_component<CBoundingBox>(bullet_config.animation.get_scaled_size());
 
-	_bullet->set_component<CMotion>(sf::Vector2f(10.0f, 0.0f), sf::Vector2f(0.0f, 0.0f));
+	_bullet->set_component<CMotion>(sf::Vector2f(bullet_config.velocity, 0.0f), sf::Vector2f(0.0f, 0.0f));
 }

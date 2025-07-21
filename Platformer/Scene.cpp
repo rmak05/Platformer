@@ -34,8 +34,12 @@ void Scene::delete_entity(entity_ptr& _entity) {
 	entity_manager.delete_entity(_entity);
 }
 
-void Scene::update_entities() {
-	entity_manager.update_entities();
+void Scene::update_added_entities() {
+	entity_manager.update_added_entities();
+}
+
+void Scene::update_deleted_entities() {
+	entity_manager.update_deleted_entities();
 }
 
 void Scene::resolve_collisions() {

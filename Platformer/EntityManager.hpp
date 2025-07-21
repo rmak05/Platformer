@@ -20,7 +20,8 @@ public:
 	void delete_inactive_entities(std::vector<entity_ptr>& entity_vec);
 	entity_ptr add_entity(const EntityType _type);
 	void delete_entity(entity_ptr& _entity);
-	void update_entities();
+	void update_added_entities();
+	void update_deleted_entities();
 	void transform_entities();
 	void resolve_collisions();
 	void update_animations();

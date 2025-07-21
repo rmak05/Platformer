@@ -89,3 +89,5 @@ Gravity 0.9
 
 // Format : Player <Animation Name> <X-Position> <Y-Position> <Run Speed> <Jump Speed>
 Player Robot 0 8 5.5 -20
+
+Bullet Brick 10

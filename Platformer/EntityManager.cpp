@@ -32,16 +32,18 @@ entity_ptr EntityManager::add_entity(const EntityType _type) {
 void EntityManager::delete_entity(entity_ptr& _entity) {
 	_entity->set_inactive();
 }
- 
-void EntityManager::update_entities() {
-	delete_inactive_entities(all_entities);
-	for(auto& entity_vec : sorted_entities) delete_inactive_entities(entity_vec);
 
+void EntityManager::update_added_entities() {
 	for (entity_ptr _entity : entites_to_add) {
 		all_entities.push_back(_entity);
 		sorted_entities[static_cast<int>(_entity->get_type())].push_back(_entity);
 	}
 	entites_to_add.clear();
+}
+
+void EntityManager::update_deleted_entities() {
+	delete_inactive_entities(all_entities);
+	for(auto& entity_vec : sorted_entities) delete_inactive_entities(entity_vec);
 }
 
 void EntityManager::transform_entities() {

@@ -12,8 +12,9 @@ Texture TexGrass    Grass.png
 
 // Animations
 // Format : Animation <Animation Name> <Texture name> <X-Scale> <Y-Scale> <Rows> <Columns> <Frame Duration>
-Animation Brick TexBrick    4 4 1 1 0
-Animation Bush  TexBush     4 4 1 2 60
-Animation Pipe  TexPipe     4 4 1 1 0
-Animation Robot TexRobot    4 4 1 1 0
-Animation Grass TexGrass    4 4 1 6 10
+Animation Brick     TexBrick    4 4 1 1 0
+Animation Bush      TexBush     4 4 1 2 60
+Animation Pipe      TexPipe     4 4 1 1 0
+Animation Robot     TexRobot    4 4 1 1 0
+Animation Grass     TexGrass    4 4 1 6 10
+Animation Bullet    TexBrick    4 4 1 1 0

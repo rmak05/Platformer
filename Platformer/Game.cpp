@@ -120,9 +120,10 @@ void Game::run() {
 			}
 		}
 
-		all_scenes[static_cast<int>(curr_scene)]->update_entities();
+		all_scenes[static_cast<int>(curr_scene)]->update_added_entities();
 		all_scenes[static_cast<int>(curr_scene)]->transform_entities();
 		all_scenes[static_cast<int>(curr_scene)]->resolve_collisions();
+		all_scenes[static_cast<int>(curr_scene)]->update_deleted_entities();
 		all_scenes[static_cast<int>(curr_scene)]->update_animations();
 		all_scenes[static_cast<int>(curr_scene)]->update_and_set_views(game_window);
 

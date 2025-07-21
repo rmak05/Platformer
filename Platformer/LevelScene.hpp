@@ -7,11 +7,12 @@
 #include "Helper.hpp"
 
 struct PlayerConfig;
+struct BulletConfig;
 
 class LevelScene;
 
 struct PlayerConfig {
-    Animation   player_animation;
+    Animation   animation;
     float       start_pos_x;
     float       start_pos_y;
     float       run_velocity;
@@ -21,11 +22,20 @@ struct PlayerConfig {
     PlayerConfig(Animation _animation, float _pos_x, float _pos_y, float _run, float _jump);
 };
 
+struct BulletConfig {
+    Animation   animation;
+    float       velocity;
+
+    BulletConfig();
+    BulletConfig(Animation _animation, float _velocity);
+};
+
 class LevelScene : public Scene {
 private:
     int&            level;
     PlayerConfig    player_config;
     entity_ptr      player_ptr;
+    BulletConfig    bullet_config;
     float           gravity;
 
 public:

@@ -40,7 +40,8 @@ public:
 
 	entity_ptr add_entity(const EntityType _type);
 	void delete_entity(entity_ptr& _entity);
-	void update_entities();
+	void update_added_entities();
+	void update_deleted_entities();
 	void transform_entities();
 	void resolve_collisions();
 
