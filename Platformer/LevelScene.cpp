@@ -8,23 +8,24 @@ PlayerConfig::PlayerConfig() {
 }
 
 PlayerConfig::PlayerConfig(Animation _animation, float _pos_x, float _pos_y, float _run, float _jump) {
-	animation		=	_animation;
-	start_pos_x		=	_pos_x;
-	start_pos_y		=	_pos_y;
-	run_velocity	=	_run;
-	jump_velocity	=	_jump;
+	animation		= _animation;
+	start_pos_x		= _pos_x;
+	start_pos_y		= _pos_y;
+	run_velocity	= _run;
+	jump_velocity	= _jump;
 }
 
 BulletConfig::BulletConfig() {
-	velocity = 0.0f;
+	bullet_velocity = 0.0f;
 }
 
-BulletConfig::BulletConfig(Animation _animation, float _velocity) {
-	animation	= _animation;
-	velocity	= _velocity;
+BulletConfig::BulletConfig(Animation _bullet_animation, float _bullet_velocity, Animation _explosion_animation) {
+	bullet_animation	= _bullet_animation;
+	bullet_velocity		= _bullet_velocity;
+	explosion_animation	= _explosion_animation;
 }
 
-LevelScene::LevelScene(EntityManager& _entity_manager, SceneId _id, Asset& _assets, int& _level) : Scene(_entity_manager, _id, _assets), player_config(), level(_level) {
+LevelScene::LevelScene(EntityManager& _entity_manager, SceneId _id, Asset& _assets, int& _level) : Scene(_entity_manager, _id, _assets), player_config(), bullet_config(), level(_level) {
 	gravity = 0.0f;
 }
 
@@ -46,7 +47,7 @@ void LevelScene::initialise() {
 	// add pause action
 
     // load level file
-	std::string config_path = "Config\\";
+	std::string config_path = "Config/";
 
 	std::ifstream level_file;
 	std::string level_file_name = "Level" + std::to_string(level) + ".txt";
@@ -93,7 +94,7 @@ void LevelScene::initialise() {
 			player_config = PlayerConfig(all_assets.get_animation(line_components[1]), std::stof(line_components[2]), std::stof(line_components[3]), std::stof(line_components[4]), std::stof(line_components[5]));
 		}
 		else if (line_components[0] == "Bullet") {
-			bullet_config = BulletConfig(all_assets.get_animation(line_components[1]), std::stof(line_components[2]));
+			bullet_config = BulletConfig(all_assets.get_animation(line_components[1]), std::stof(line_components[2]), all_assets.get_animation(line_components[3]));
 		}
 	}
 
@@ -182,24 +183,20 @@ void LevelScene::update_and_set_views(sf::RenderWindow& game_window) {
 
 void LevelScene::spawn_player() {
 	player_ptr = add_entity(EntityType::player);
-
 	player_ptr->set_component<CShape>(player_config.animation);
-
 	player_ptr->set_component<CTransform>(grid_to_mid_coord(sf::Vector2f(player_config.start_pos_x, player_config.start_pos_y), player_config.animation));
-
 	player_ptr->set_component<CBoundingBox>(player_config.animation.get_scaled_size());
-
 	player_ptr->set_component<CMotion>(sf::Vector2f(0.0f, 0.0f), sf::Vector2f(0.0f, gravity));
 }
 
 void LevelScene::spawn_bullet() {
-	entity_ptr _bullet		= add_entity(EntityType::bullet);
+	entity_ptr _bullet = add_entity(EntityType::bullet);
+	_bullet->set_component<CShape>(bullet_config.bullet_animation);
+	_bullet->set_component<CTransform>(player_ptr->get_component<CTransform>().curr_position + sf::Vector2f(64.0f, 0.0f));
+	_bullet->set_component<CBoundingBox>(bullet_config.bullet_animation.get_scaled_size());
+	_bullet->set_component<CMotion>(sf::Vector2f(bullet_config.bullet_velocity, 0.0f), sf::Vector2f(0.0f, 0.0f));
 
-	_bullet->set_component<CShape>(bullet_config.animation);
-
-	_bullet->set_component<CTransform>(player_ptr->get_component<CTransform>().curr_position);
-
-	_bullet->set_component<CBoundingBox>(bullet_config.animation.get_scaled_size());
-
-	_bullet->set_component<CMotion>(sf::Vector2f(bullet_config.velocity, 0.0f), sf::Vector2f(0.0f, 0.0f));
+	entity_ptr _explosion = add_entity(EntityType::decoration);
+	_explosion->set_component<CShape>(bullet_config.explosion_animation);
+	_explosion->set_component<CTransform>(player_ptr->get_component<CTransform>().curr_position + sf::Vector2f(64.0f, 0.0f));
 }

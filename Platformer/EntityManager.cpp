@@ -53,6 +53,11 @@ void EntityManager::transform_entities() {
 }
 
 void EntityManager::resolve_collisions() {
+	/*
+	TODO:
+	Write separate loops to check collisions for player, bullet, etc.
+	This naive O(N^2) seems a bad approach.
+	*/
 	for (auto& _entity1 : all_entities) {
 		if(!_entity1->is_active()) continue;
 
@@ -122,6 +127,10 @@ void EntityManager::resolve_collisions() {
 
 void EntityManager::update_animations() {
 	for (auto& _entity : all_entities) {
+		if (_entity->get_component<CShape>().shape.has_ended()) {
+			_entity->set_inactive();
+			continue;
+		}
 		_entity->update_animation();
 	}
 }

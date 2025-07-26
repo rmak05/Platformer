@@ -23,11 +23,12 @@ struct PlayerConfig {
 };
 
 struct BulletConfig {
-    Animation   animation;
-    float       velocity;
+    Animation   bullet_animation;
+    Animation   explosion_animation;
+    float       bullet_velocity;
 
     BulletConfig();
-    BulletConfig(Animation _animation, float _velocity);
+    BulletConfig(Animation _bullet_animation, float _bullet_velocity, Animation _explosion_animation);
 };
 
 class LevelScene : public Scene {

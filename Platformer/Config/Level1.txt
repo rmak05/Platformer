@@ -1,4 +1,4 @@
-// Format : <Entity Type> <Animation Name> <X-Position> <Y-Position>
+// Format: <Entity Type> <Animation Name> <X-Position> <Y-Position>
 Tile        Brick   -1  0
 Tile        Brick   -1  1
 Tile        Brick   -1  2
@@ -84,10 +84,11 @@ Decoration  Grass   7   10
 Decoration  Grass   6   5
 Decoration  Grass   18  10
 
-// Format : Gravity <Gravity>
+// Format: Gravity <Gravity>
 Gravity 0.9
 
-// Format : Player <Animation Name> <X-Position> <Y-Position> <Run Speed> <Jump Speed>
+// Format: Player <Animation Name> <X-Position> <Y-Position> <Run Speed> <Jump Speed>
 Player Robot 0 8 5.5 -20
 
-Bullet Brick 10
+// Format: Bullet <Bullet Animation Name> <Bullet Speed> <Explosion Animation Name>
+Bullet Bullet 15 Explosion

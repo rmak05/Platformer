@@ -15,7 +15,7 @@ void Game::initialise() {
 	// intitialise scenes
 	all_scenes = std::vector<scene_ptr>((size_t)SceneId::count);
 	all_scenes[static_cast<int>(SceneId::level)] = std::make_shared<LevelScene>(entity_manager, SceneId::level, all_assets, curr_level);
-	curr_level = 1;		// remove this please
+	curr_level = 1;		// TODO: remove this please
 	set_curr_scene(SceneId::level);
 
 	sf::VideoMode desktop_size	= sf::VideoMode::getDesktopMode();
@@ -27,7 +27,7 @@ void Game::initialise() {
 }
 
 void Game::config() {
-	std::string config_path = "Config\\";
+	std::string config_path = "Config/";
 
 	// Loading Assets
 	std::ifstream assets_file;
@@ -37,7 +37,7 @@ void Game::config() {
 		std::cerr << "Failed to open the file " << config_path + assets_file_name << std::endl;
 		std::exit(EXIT_FAILURE);
 	}
-	std::string textures_path, animations_path, fonts_path;
+	std::string texture_path, font_path;
 
 	while (!assets_file.eof()) {
 		std::string line;
@@ -45,21 +45,23 @@ void Game::config() {
 
 		std::vector<std::string> line_components = line_parser(line);
 
-		if(line_components.empty()) continue;
-
-		if		(line_components[0] == "TexturePath") {
-			textures_path = line_components[1];
+		if		(line_components.empty()) {
+			continue;
+		}
+		else if	(line_components[0] == "TexturePath") {
+			texture_path = line_components[1];
 		}
 		else if (line_components[0] == "Texture") {
-			sf::Texture _texture;
-			if (!_texture.loadFromFile(textures_path + line_components[2])) {
-				std::cerr << "Unable to load the texture " << line_components[1] << " from " << textures_path + line_components[2] << std::endl;
-			}
-			all_assets.add_texture(line_components[1], _texture);
+			all_assets.add_texture(line_components[1], texture_path + "/" + line_components[2]);
 		}
 		else if (line_components[0] == "Animation") {
-			Animation _animation(line_components[1], all_assets.get_texture(line_components[2]), std::stof(line_components[3]), std::stof(line_components[4]), static_cast<unsigned>(std::stoi(line_components[5])), static_cast<unsigned>(std::stoi(line_components[6])), static_cast<unsigned>(std::stoi(line_components[7])));
-			all_assets.add_animation(line_components[1], _animation);
+			all_assets.add_animation(line_components);
+		}
+		else if	(line_components[0] == "FontPath") {
+			font_path = line_components[1];
+		}
+		else if (line_components[0] == "Font") {
+			all_assets.add_font(line_components[1], font_path + "/" + line_components[2]);
 		}
 	}
 
@@ -121,10 +123,12 @@ void Game::run() {
 		}
 
 		all_scenes[static_cast<int>(curr_scene)]->update_added_entities();
+		all_scenes[static_cast<int>(curr_scene)]->update_deleted_entities();
 		all_scenes[static_cast<int>(curr_scene)]->transform_entities();
 		all_scenes[static_cast<int>(curr_scene)]->resolve_collisions();
-		all_scenes[static_cast<int>(curr_scene)]->update_deleted_entities();
 		all_scenes[static_cast<int>(curr_scene)]->update_animations();
+		all_scenes[static_cast<int>(curr_scene)]->update_added_entities();
+		all_scenes[static_cast<int>(curr_scene)]->update_deleted_entities();
 		all_scenes[static_cast<int>(curr_scene)]->update_and_set_views(game_window);
 
 		game_window.clear(BG_COLOR);
@@ -133,3 +137,8 @@ void Game::run() {
 		game_window.display();
 	}
 }
+
+/*
+TODO:
+In future there maybe a case where both added and deleted entities might need to be updated before and after resolve collisions
+*/

@@ -16,7 +16,7 @@ namespace debug {
 		show_grid = false;
 		grid.clear();
 		grid_coord.clear();
-		grid_font.loadFromFile("Assets\\Fonts\\NotoSans_Regular.ttf");
+		grid_font.loadFromFile("Assets/Fonts/NotoSans_Regular.ttf");
 		grid_color = grid_coord_color = sf::Color(255, 0, 0, 255);
 		side_length = 64;
 		coord_text_size = 15u;

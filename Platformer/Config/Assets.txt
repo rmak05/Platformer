@@ -2,19 +2,26 @@
 
 // Textures
 // First provide the path to import textures
-// Format : Texture <Texture Name> <File name>
-TexturePath Assets\Textures\
-Texture TexBrick    Brick.png
-Texture TexBush     Bush.png
-Texture TexPipe     Pipe.png
-Texture TexRobot    Robot.png
-Texture TexGrass    Grass.png
+// Format: Texture <Texture Name> <File name>
+TexturePath Assets/Textures
+Texture TexBrick        Brick.png
+Texture TexPipe         Pipe.png
+Texture TexRobot        Robot.png
+Texture TexGrass        Grass.png
+Texture TexBullet       Bullet.png
+Texture TexExplosion    Explosion.png
 
 // Animations
-// Format : Animation <Animation Name> <Texture name> <X-Scale> <Y-Scale> <Rows> <Columns> <Frame Duration>
-Animation Brick     TexBrick    4 4 1 1 0
-Animation Bush      TexBush     4 4 1 2 60
-Animation Pipe      TexPipe     4 4 1 1 0
-Animation Robot     TexRobot    4 4 1 1 0
-Animation Grass     TexGrass    4 4 1 6 10
-Animation Bullet    TexBrick    4 4 1 1 0
+// Format: Animation <Animation Name> <Texture name> <X-Scale> <Y-Scale> <Rows> <Columns> <Frame Duration> <Loop>
+Animation Brick     TexBrick        4 4 1 1 0  1
+Animation Pipe      TexPipe         4 4 1 1 0  1
+Animation Robot     TexRobot        4 4 1 1 0  1
+Animation Grass     TexGrass        4 4 1 6 10 1
+Animation Bullet    TexBullet       2 2 1 1 0  1
+Animation Explosion TexExplosion    4 4 1 7 3  0
+
+// Fonts
+// First provide the path to import fonts
+// Format: Font <Font Name> <File name>
+FontPath Assets/Fonts
+Font NotoSans NotoSans_Regular.ttf

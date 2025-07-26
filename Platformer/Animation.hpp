@@ -13,10 +13,12 @@ private:
 	unsigned		sprite_count;
 	unsigned		duration;		// number of frames before changing current sprite
 	unsigned		curr_frame;		// total frames = sprite_count * speed
+	bool			loop;
+	bool			end;
 
 public:
 	Animation();
-	Animation(const std::string _name, const sf::Texture& _texture, const float _scale_x, const float _scale_y, const unsigned _num_rows, const unsigned _num_columns, const unsigned _duration);
+	Animation(const std::string _name, const sf::Texture& _texture, const float _scale_x, const float _scale_y, const unsigned _num_rows, const unsigned _num_columns, const unsigned _duration, const bool _loop);
 
 	std::string get_name() const;
 	sf::Sprite get_sprite() const;
