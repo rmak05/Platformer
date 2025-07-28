@@ -136,11 +136,13 @@ void LevelScene::do_action(Action _action) {
 		case ActionName::left: {
 			auto& _cmotion = player_ptr->get_component<CMotion>();
 			if		(_action.get_type() == ActionType::start) {
-				_cmotion.velocity.x = (-player_config.run_velocity);
+				player_ptr->get_component<CInput>().left = true;
+				_cmotion.velocity.x += (-player_config.run_velocity);
 			}
 			else if (_action.get_type() == ActionType::end) {
-				if(_cmotion.velocity.x == (-player_config.run_velocity)) _cmotion.velocity.x = 0.0f;
-				//_cmotion.velocity.x -= (-player_config.run_velocity);
+				player_ptr->get_component<CInput>().left = false;
+				if(player_ptr->get_component<CInput>().right) _cmotion.velocity.x = (player_config.run_velocity);
+				else _cmotion.velocity.x = 0.0f;
 			}
 
 			break;
@@ -149,11 +151,13 @@ void LevelScene::do_action(Action _action) {
 		case ActionName::right: {
 			auto& _cmotion = player_ptr->get_component<CMotion>();
 			if		(_action.get_type() == ActionType::start) {
-				_cmotion.velocity.x = (player_config.run_velocity);
+				player_ptr->get_component<CInput>().right = true;
+				_cmotion.velocity.x += (player_config.run_velocity);
 			}
 			else if (_action.get_type() == ActionType::end) {
-				if(_cmotion.velocity.x == (player_config.run_velocity)) _cmotion.velocity.x = 0.0f;
-				//_cmotion.velocity.x -= (player_config.run_velocity);
+				player_ptr->get_component<CInput>().right = false;
+				if(player_ptr->get_component<CInput>().left) _cmotion.velocity.x = (-player_config.run_velocity);
+				else _cmotion.velocity.x = 0.0f;
 			}
 
 			break;
@@ -209,6 +213,7 @@ void LevelScene::spawn_player() {
 	player_ptr->set_component<CTransform>(grid_to_mid_coord(sf::Vector2f(player_config.start_pos_x, player_config.start_pos_y), player_config.animation));
 	player_ptr->set_component<CBoundingBox>(player_config.animation.get_scaled_size());
 	player_ptr->set_component<CMotion>(sf::Vector2f(0.0f, 0.0f), sf::Vector2f(0.0f, gravity));
+	player_ptr->set_component<CInput>();
 }
 
 void LevelScene::spawn_bullet() {

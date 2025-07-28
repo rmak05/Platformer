@@ -96,28 +96,28 @@ void Game::run() {
 
 				case sf::Event::EventType::MouseButtonPressed: {
 					ActionName _name = all_scenes[static_cast<int>(curr_scene)]->find_action(ActionKey(InputType::mouse, static_cast<int>(_event.mouseButton.button)));
-					if(_name != ActionName::_default) all_scenes[static_cast<int>(curr_scene)]->do_action(Action(_name, ActionType::start));
+					if (_name != ActionName::_default) all_scenes[static_cast<int>(curr_scene)]->do_action(Action(_name, ActionType::start));
 
 					break;
 				}
 
 				case sf::Event::EventType::MouseButtonReleased: {
 					ActionName _name = all_scenes[static_cast<int>(curr_scene)]->find_action(ActionKey(InputType::mouse, static_cast<int>(_event.mouseButton.button)));
-					if(_name != ActionName::_default) all_scenes[static_cast<int>(curr_scene)]->do_action(Action(_name, ActionType::end));
+					if (_name != ActionName::_default) all_scenes[static_cast<int>(curr_scene)]->do_action(Action(_name, ActionType::end));
 
 					break;
 				}
 
 				case sf::Event::EventType::KeyPressed: {
 					ActionName _name = all_scenes[static_cast<int>(curr_scene)]->find_action(ActionKey(InputType::keyboard, static_cast<int>(_event.key.code)));
-					if(_name != ActionName::_default) all_scenes[static_cast<int>(curr_scene)]->do_action(Action(_name, ActionType::start));
+					if (_name != ActionName::_default) all_scenes[static_cast<int>(curr_scene)]->do_action(Action(_name, ActionType::start));
 
 					break;
 				}
 
 				case sf::Event::EventType::KeyReleased: {
 					ActionName _name = all_scenes[static_cast<int>(curr_scene)]->find_action(ActionKey(InputType::keyboard, static_cast<int>(_event.key.code)));
-					if(_name != ActionName::_default) all_scenes[static_cast<int>(curr_scene)]->do_action(Action(_name, ActionType::end));
+					if (_name != ActionName::_default) all_scenes[static_cast<int>(curr_scene)]->do_action(Action(_name, ActionType::end));
 
 					break;
 				}

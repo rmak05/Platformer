@@ -65,17 +65,21 @@ public:
 	CMotion(const sf::Vector2f _velocity, const sf::Vector2f _acceleration);
 };
 
+class CInput : public Component {
+public:
+	bool left;
+	bool right;
+
+	CInput();
+	CInput(const bool _left, const bool _right);
+};
+
 class CLifespan : public Component {
 public:
 	
 };
 
-class CInput : public Component {
+class CScore : public Component {
 public:
 	
 };
-
-//class CScore : public Component {
-//public:
-//	
-//};

@@ -66,3 +66,13 @@ CMotion::CMotion(const sf::Vector2f _velocity, const sf::Vector2f _acceleration)
 	velocity		= _velocity;
 	acceleration	= _acceleration;
 }
+
+CInput::CInput() {
+	left	= false;
+	right	= false;
+}
+
+CInput::CInput(const bool _left, const bool _right) {
+	left	= _left;
+	right	= _right;
+}
