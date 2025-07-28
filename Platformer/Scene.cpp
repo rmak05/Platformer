@@ -13,11 +13,11 @@ void Scene::initialise() {
 	has_ended	= false;
 }
 
-void Scene::register_action(const int _key, const ActionName _action_name) {
+void Scene::register_action(const ActionKey _key, const ActionName _action_name) {
 	action_map[_key] = _action_name;
 }
 
-ActionName Scene::find_action(int _key) {
+ActionName Scene::find_action(const ActionKey _key) {
 	if(action_map.find(_key) != action_map.end()) return action_map[_key];
 	else return ActionName::_default;
 }

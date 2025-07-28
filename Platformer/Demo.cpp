@@ -95,7 +95,7 @@
 //    int a;
 //
 //    A() {
-//
+//        a=1000;
 //    }
 //
 //    A(A&& b) noexcept{
@@ -112,17 +112,32 @@
 //};
 //
 //void demo() {
-//    cout << (int)poke::fire << endl;
-//    cout << (int)poke::grass << endl;
+//    sf::RenderWindow window(sf::VideoMode(19u * 64u, 12u * 64u), "Master Window");
 //
-//    poke p = poke::fairy;
+//    while (window.isOpen()){
+//        sf::Event event;
 //
-//    if(p == poke::grass) cout<<"yes\n";
+//        while (window.pollEvent(event)){
+//            if      (event.type == sf::Event::Closed) {
+//                window.close();
+//            }
+//            else if (event.type == sf::Event::EventType::KeyPressed) {
+//                std::cout << "Key Pressed: " << event.key.code << std::endl;
+//            }
+//            else if (event.type == sf::Event::EventType::KeyReleased) {
+//                std::cout << "Key Released: " << event.key.code << std::endl;
+//            }
+//        }
+//
+//        
+//
+//        window.display();
+//    }
 //}
 //
 //int main(){
-//    test();
-//    //demo();
+//    //test();
+//    demo();
 //    
 //    return 0;
 //}

@@ -2,6 +2,9 @@
 
 enum class ActionName;
 enum class ActionType;
+enum class InputType;
+
+struct ActionKey;
 
 class Action;
 
@@ -14,6 +17,7 @@ enum class ActionName {
 	shoot,
 	quit,
 	pause,
+	debug_grid,
 	debug_box,
 	debug_texture,
 	count,
@@ -23,6 +27,13 @@ enum class ActionName {
 enum class ActionType {
 	start,
 	end,
+	count,
+	_default
+};
+
+enum class InputType {
+	keyboard,
+	mouse,
 	count,
 	_default
 };
@@ -38,4 +49,19 @@ public:
 
 	ActionName get_name() const;
 	ActionType get_type() const;
+};
+
+struct ActionKey {
+	InputType type;
+	int code;
+
+	ActionKey();
+	ActionKey(InputType _type, int _code);
+
+	bool operator<(const ActionKey& _that) const;
+	bool operator>(const ActionKey& _that) const;
+	bool operator<=(const ActionKey& _that) const;
+	bool operator>=(const ActionKey& _that) const;
+	bool operator==(const ActionKey& _that) const;
+	bool operator!=(const ActionKey& _that) const;
 };

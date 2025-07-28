@@ -95,22 +95,28 @@ void Game::run() {
 				}
 
 				case sf::Event::EventType::MouseButtonPressed: {
-					if (_event.mouseButton.button == sf::Mouse::Right) {
-						debug::update();
-					}
+					ActionName _name = all_scenes[static_cast<int>(curr_scene)]->find_action(ActionKey(InputType::mouse, static_cast<int>(_event.mouseButton.button)));
+					if(_name != ActionName::_default) all_scenes[static_cast<int>(curr_scene)]->do_action(Action(_name, ActionType::start));
+
+					break;
+				}
+
+				case sf::Event::EventType::MouseButtonReleased: {
+					ActionName _name = all_scenes[static_cast<int>(curr_scene)]->find_action(ActionKey(InputType::mouse, static_cast<int>(_event.mouseButton.button)));
+					if(_name != ActionName::_default) all_scenes[static_cast<int>(curr_scene)]->do_action(Action(_name, ActionType::end));
 
 					break;
 				}
 
 				case sf::Event::EventType::KeyPressed: {
-					ActionName _name = all_scenes[static_cast<int>(curr_scene)]->find_action(static_cast<int>(_event.key.code));
+					ActionName _name = all_scenes[static_cast<int>(curr_scene)]->find_action(ActionKey(InputType::keyboard, static_cast<int>(_event.key.code)));
 					if(_name != ActionName::_default) all_scenes[static_cast<int>(curr_scene)]->do_action(Action(_name, ActionType::start));
 
 					break;
 				}
 
 				case sf::Event::EventType::KeyReleased: {
-					ActionName _name = all_scenes[static_cast<int>(curr_scene)]->find_action(static_cast<int>(_event.key.code));
+					ActionName _name = all_scenes[static_cast<int>(curr_scene)]->find_action(ActionKey(InputType::keyboard, static_cast<int>(_event.key.code)));
 					if(_name != ActionName::_default) all_scenes[static_cast<int>(curr_scene)]->do_action(Action(_name, ActionType::end));
 
 					break;
@@ -139,6 +145,6 @@ void Game::run() {
 }
 
 /*
-TODO:
-In future there maybe a case where both added and deleted entities might need to be updated before and after resolve collisions
+TODO: make a get_curr_scene function
+Connect debug to debug box and debug textures
 */

@@ -33,17 +33,29 @@ void LevelScene::initialise() {
     Scene::initialise();
 
 	// register actions
-	register_action(sf::Keyboard::W,		ActionName::jump);
-	register_action(sf::Keyboard::A,		ActionName::left);
-	register_action(sf::Keyboard::D,		ActionName::right);
-	register_action(sf::Keyboard::Up,		ActionName::jump);
-	register_action(sf::Keyboard::Left,		ActionName::left);
-	register_action(sf::Keyboard::Right,	ActionName::right);
-	register_action(sf::Keyboard::Q,		ActionName::shoot);
+	register_action(
+		ActionKey(InputType::keyboard, static_cast<int>(sf::Keyboard::W)),		ActionName::jump);
+	register_action(
+		ActionKey(InputType::keyboard, static_cast<int>(sf::Keyboard::A)),		ActionName::left);
+	register_action(
+		ActionKey(InputType::keyboard, static_cast<int>(sf::Keyboard::D)),		ActionName::right);
+	register_action(
+		ActionKey(InputType::keyboard, static_cast<int>(sf::Keyboard::Up)),		ActionName::jump);
+	register_action(
+		ActionKey(InputType::keyboard, static_cast<int>(sf::Keyboard::Left)),	ActionName::left);
+	register_action(
+		ActionKey(InputType::keyboard, static_cast<int>(sf::Keyboard::Right)),	ActionName::right);
+	register_action(
+		ActionKey(InputType::mouse, static_cast<int>(sf::Mouse::Left)),			ActionName::shoot);
 
-	register_action(sf::Keyboard::Escape,	ActionName::quit);
-	register_action(sf::Keyboard::B,		ActionName::debug_box);
-	register_action(sf::Keyboard::T,		ActionName::debug_texture);
+	register_action(
+		ActionKey(InputType::keyboard, static_cast<int>(sf::Keyboard::Escape)),	ActionName::quit);
+	register_action(
+		ActionKey(InputType::keyboard, static_cast<int>(sf::Keyboard::B)),		ActionName::debug_box);
+	register_action(
+		ActionKey(InputType::keyboard, static_cast<int>(sf::Keyboard::T)),		ActionName::debug_texture);
+	register_action(
+		ActionKey(InputType::mouse, static_cast<int>(sf::Mouse::Right)),		ActionName::debug_grid);
 	// add pause action
 
     // load level file
@@ -127,7 +139,8 @@ void LevelScene::do_action(Action _action) {
 				_cmotion.velocity.x = (-player_config.run_velocity);
 			}
 			else if (_action.get_type() == ActionType::end) {
-				_cmotion.velocity.x = 0.0f;
+				if(_cmotion.velocity.x == (-player_config.run_velocity)) _cmotion.velocity.x = 0.0f;
+				//_cmotion.velocity.x -= (-player_config.run_velocity);
 			}
 
 			break;
@@ -139,7 +152,8 @@ void LevelScene::do_action(Action _action) {
 				_cmotion.velocity.x = (player_config.run_velocity);
 			}
 			else if (_action.get_type() == ActionType::end) {
-				_cmotion.velocity.x = 0.0f;
+				if(_cmotion.velocity.x == (player_config.run_velocity)) _cmotion.velocity.x = 0.0f;
+				//_cmotion.velocity.x -= (player_config.run_velocity);
 			}
 
 			break;
@@ -148,6 +162,14 @@ void LevelScene::do_action(Action _action) {
 		case ActionName::shoot: {
 			if (_action.get_type() == ActionType::start) {
 				spawn_bullet();
+			}
+
+			break;
+		}
+
+		case ActionName::debug_grid: {
+			if (_action.get_type() == ActionType::start) {
+				debug::update();
 			}
 
 			break;
