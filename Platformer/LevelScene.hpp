@@ -12,14 +12,16 @@ struct BulletConfig;
 class LevelScene;
 
 struct PlayerConfig {
-    Animation   animation;
+    Animation   animation_still;
+    Animation   animation_moving;
+    Animation   animation_jumping;
     float       start_pos_x;
     float       start_pos_y;
     float       run_velocity;
     float       jump_velocity;
 
     PlayerConfig();
-    PlayerConfig(Animation _animation, float _pos_x, float _pos_y, float _run, float _jump);
+    PlayerConfig(Animation _animation_still, Animation _animation_moving, Animation _animation_jumping, float _pos_x, float _pos_y, float _run, float _jump);
 };
 
 struct BulletConfig {

@@ -87,8 +87,8 @@ Decoration  Grass   18  10
 // Format: Gravity <Gravity>
 Gravity 0.9
 
-// Format: Player <Animation Name> <X-Position> <Y-Position> <Run Speed> <Jump Speed>
-Player Robot 0 8 5.5 -20
+// Format: Player <Still Animation Name> <Moving Animation Name> <Jumping Animation Name> <X-Position> <Y-Position> <Run Speed> <Jump Speed>
+Player TankStill TankMoving TankJumping 0 8 5.5 -20
 
 // Format: Bullet <Bullet Animation Name> <Bullet Speed> <Explosion Animation Name>
 Bullet Bullet 15 Explosion

@@ -29,12 +29,22 @@ sf::Sprite Animation::get_sprite() const {
     return sprite;
 }
 
+sf::Vector2f Animation::get_scale() const {
+    return sprite.getScale();
+}
+
 sf::Vector2u Animation::get_size() const {
     return size;
 }
 
 sf::Vector2u Animation::get_sprite_size() const {
     return sprite_size;
+}
+
+sf::Vector2f Animation::get_scaled_size() const {
+    sf::Vector2f _scale = sprite.getScale();
+
+    return sf::Vector2f(sprite_size.x * _scale.x, sprite_size.y * _scale.y);
 }
 
 void Animation::set_position(sf::Vector2f _position) {
@@ -45,10 +55,12 @@ void Animation::set_position(float _x, float _y) {
     sprite.setPosition(_x, _y);
 }
 
-sf::Vector2f Animation::get_scaled_size() const {
-    sf::Vector2f _scale = sprite.getScale();
+void Animation::set_scale(sf::Vector2f _scale) {
+    sprite.setScale(_scale);
+}
 
-    return sf::Vector2f(sprite_size.x * _scale.x, sprite_size.y * _scale.y);
+void Animation::set_scale(float _scale_x, float _scale_y) {
+    sprite.setScale(_scale_x, _scale_y);
 }
 
 void Animation::update() {

@@ -22,11 +22,14 @@ public:
 
 	std::string get_name() const;
 	sf::Sprite get_sprite() const;
+	sf::Vector2f get_scale() const;
 	sf::Vector2u get_size() const;
 	sf::Vector2u get_sprite_size() const;
+	sf::Vector2f get_scaled_size() const;
 	void set_position(sf::Vector2f _position);
 	void set_position(float _x, float _y);
-	sf::Vector2f get_scaled_size() const;
+	void set_scale(sf::Vector2f _scale);
+	void set_scale(float _scale_x, float _scale_y);
 	void update();
 	bool has_ended() const;
 	void draw(sf::RenderWindow& game_window) const;

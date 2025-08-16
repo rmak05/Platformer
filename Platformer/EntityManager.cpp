@@ -147,9 +147,9 @@ void EntityManager::draw_entities(sf::RenderWindow& game_window) const {
 	// improve this logic
 
 	for (auto& _entity : all_entities) {
-		if(_entity->get_type() == EntityType::decoration) _entity->draw(game_window, display_textures, display_bounding_boxes);
+		if(_entity->get_type() != EntityType::decoration) _entity->draw(game_window, display_textures, display_bounding_boxes);
 	}
 	for (auto& _entity : all_entities) {
-		if(_entity->get_type() != EntityType::decoration) _entity->draw(game_window, display_textures, display_bounding_boxes);
+		if(_entity->get_type() == EntityType::decoration) _entity->draw(game_window, display_textures, display_bounding_boxes);
 	}
 }

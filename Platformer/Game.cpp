@@ -147,4 +147,5 @@ void Game::run() {
 /*
 TODO: make a get_curr_scene function
 Connect debug to debug box and debug textures
+Should Animation in assets return a reference or a copy?
 */

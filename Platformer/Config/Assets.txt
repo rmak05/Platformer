@@ -10,15 +10,20 @@ Texture TexRobot        Robot.png
 Texture TexGrass        Grass.png
 Texture TexBullet       Bullet.png
 Texture TexExplosion    Explosion.png
+Texture TexTankStill    Tank_Still.png
+Texture TexTankMoving   Tank_Moving.png
 
 // Animations
 // Format: Animation <Animation Name> <Texture name> <X-Scale> <Y-Scale> <Rows> <Columns> <Frame Duration> <Loop>
-Animation Brick     TexBrick        4 4 1 1 0  1
-Animation Pipe      TexPipe         4 4 1 1 0  1
-Animation Robot     TexRobot        4 4 1 1 0  1
-Animation Grass     TexGrass        4 4 1 6 10 1
-Animation Bullet    TexBullet       2 2 1 1 0  1
-Animation Explosion TexExplosion    4 4 1 7 3  0
+Animation Brick         TexBrick        4 4 1 1 0  1
+Animation Pipe          TexPipe         4 4 1 1 0  1
+Animation Robot         TexRobot        4 4 1 1 0  1
+Animation Grass         TexGrass        4 4 1 6 10 1
+Animation Bullet        TexBullet       2 2 1 1 0  1
+Animation Explosion     TexExplosion    4 4 1 7 2  0
+Animation TankStill     TexTankStill    4 4 1 1 0  1
+Animation TankMoving    TexTankMoving   4 4 1 4 5  1
+Animation TankJumping   TexTankMoving   4 4 1 4 5  1
 
 // Fonts
 // First provide the path to import fonts
