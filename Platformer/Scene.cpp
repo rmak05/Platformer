@@ -23,7 +23,9 @@ ActionName Scene::find_action(const ActionKey _key) {
 }
 
 void Scene::transform_entities() {
-	entity_manager.transform_entities();
+	for (auto& _entity : entity_manager.all_entities) {
+		_entity->transform();
+	}
 }
 
 entity_ptr Scene::add_entity(const EntityType _type) {

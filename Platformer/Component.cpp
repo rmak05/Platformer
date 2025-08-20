@@ -6,16 +6,10 @@ Component::Component() {
 
 CTransform::CTransform() : Component() {}
 
-CTransform::CTransform(const sf::Vector2f _position) : Component() {
-	prev_position = _position;
-	curr_position = _position;
-}
-
-CTransform::CTransform(float _x, float _y) : Component() {
-	prev_position.x = _x;
-	prev_position.y = _y;
-
-	curr_position	= prev_position; 
+CTransform::CTransform(const sf::Vector2f _position, const sf::Vector2f _scale) : Component() {
+	prev_position	= _position;
+	curr_position	= _position;
+	scale			= _scale;
 }
 
 CShape::CShape() : Component() {}
@@ -26,6 +20,10 @@ CShape::CShape(const Animation _shape) : Component() {
 
 void CShape::set_position(sf::Vector2f _position) {
 	shape.set_position(_position);
+}
+
+void CShape::set_scale(sf::Vector2f _scale) {
+	shape.set_scale(_scale);
 }
 
 void CShape::update_animation() {

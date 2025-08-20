@@ -41,18 +41,12 @@ sf::Vector2u Animation::get_sprite_size() const {
     return sprite_size;
 }
 
-sf::Vector2f Animation::get_scaled_size() const {
-    sf::Vector2f _scale = sprite.getScale();
-
-    return sf::Vector2f(sprite_size.x * _scale.x, sprite_size.y * _scale.y);
-}
-
 void Animation::set_position(sf::Vector2f _position) {
     sprite.setPosition(_position);
 }
 
-void Animation::set_position(float _x, float _y) {
-    sprite.setPosition(_x, _y);
+void Animation::set_position(float _pos_x, float _pos_y) {
+    sprite.setPosition(_pos_x, _pos_y);
 }
 
 void Animation::set_scale(sf::Vector2f _scale) {

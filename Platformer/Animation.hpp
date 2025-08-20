@@ -25,9 +25,8 @@ public:
 	sf::Vector2f get_scale() const;
 	sf::Vector2u get_size() const;
 	sf::Vector2u get_sprite_size() const;
-	sf::Vector2f get_scaled_size() const;
 	void set_position(sf::Vector2f _position);
-	void set_position(float _x, float _y);
+	void set_position(float _pos_x, float _pos_y);
 	void set_scale(sf::Vector2f _scale);
 	void set_scale(float _scale_x, float _scale_y);
 	void update();

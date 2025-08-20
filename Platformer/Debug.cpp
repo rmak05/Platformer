@@ -74,6 +74,10 @@ namespace debug {
 		}
 	}
 
+	/*
+	TODO: compare this with the debug file in CP folder
+	*/
+
 	void print_helper(const int i) {
 		std::cerr << i;
 	}

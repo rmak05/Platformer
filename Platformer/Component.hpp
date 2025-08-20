@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include "Animation.hpp"
 #include "Theme.hpp"
+#include "Debug.hpp"
 
 class Component;
 class CTransform;
@@ -25,10 +26,10 @@ class CTransform : public Component {
 public:
 	sf::Vector2f prev_position;
 	sf::Vector2f curr_position;
+	sf::Vector2f scale;
 
 	CTransform();
-	CTransform(const sf::Vector2f _position);
-	CTransform(float _x, float _y);
+	CTransform(const sf::Vector2f _position, const sf::Vector2f _scale);
 };
 
 class CShape : public Component {
@@ -39,6 +40,7 @@ public:
 	CShape(const Animation _shape);
 
 	void set_position(sf::Vector2f _position);
+	void set_scale(sf::Vector2f _scale);
 	void update_animation();
 	void draw(sf::RenderWindow& game_window, bool display_shape) const;
 };

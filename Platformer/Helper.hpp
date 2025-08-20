@@ -5,8 +5,12 @@
 #include <vector>
 #include <string>
 #include <SFML/Graphics.hpp>
-#include "Animation.hpp"
 
-std::vector<std::string> line_parser(std::string& line);
-sf::Vector2f grid_to_mid_coord(const sf::Vector2f& top_left_coord, const Animation& _animation);
-void redirect_stderr(const std::ofstream& error_file);
+std::vector<std::string> line_parser(std::string& _line);
+sf::Vector2f grid_to_mid_coord(const sf::Vector2f& _top_left_coord, const sf::Vector2f& _scale, const sf::Vector2f& _unscaled_size);
+void redirect_stderr(const std::ofstream& _error_file);
+
+template<class T>
+sf::Vector2<T> vector_pairwise_product(const sf::Vector2<T>& _a, const sf::Vector2<T>& _b) {
+    return sf::Vector2<T>(_a.x * _b.x, _a.y * _b.y);
+}

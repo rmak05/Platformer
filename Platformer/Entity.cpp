@@ -41,6 +41,8 @@ void Entity::transform() {
 
 	auto& _cboundingbox			= get_component<CBoundingBox>();
 	_cboundingbox.set_position(_ctransform.curr_position);
+
+	_cshape.set_scale(_ctransform.scale);
 }
 
 void Entity::transform_after_collision() {
