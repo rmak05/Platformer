@@ -2,6 +2,7 @@
 
 #include <tuple>
 #include <utility>
+#include <stdexcept>
 #include "Component.hpp"
 #include "Debug.hpp"
 
@@ -74,17 +75,23 @@ T& Entity::set_component(TArgs&&... args) {
 
 template<typename T>
 T& Entity::get_component() {
+	if (!has_component<T>()) {
+		throw std::runtime_error("Accessing (get_component) a Component which the Entity doesn't contain.");
+	}
 	return std::get<T>(all_components);
 }
 
 template<typename T>
 const T& Entity::get_component() const {
+	if (!has_component<T>()) {
+		throw std::runtime_error("Accessing (get_component) a Component which the Entity doesn't contain.");
+	}
 	return std::get<T>(all_components);
 }
 
 template<typename T>
-bool Entity::has_component() const{
-	return get_component<T>().has;
+bool Entity::has_component() const {
+	return std::get<T>(all_components).has;
 }
 
 template<typename T>

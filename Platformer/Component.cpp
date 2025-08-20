@@ -4,6 +4,10 @@ Component::Component() {
 	has = false;
 }
 
+Component::Component(const bool _has) {
+	has = _has;
+}
+
 CTransform::CTransform() : Component() {}
 
 CTransform::CTransform(const sf::Vector2f _position, const sf::Vector2f _scale) : Component() {
@@ -65,12 +69,12 @@ CMotion::CMotion(const sf::Vector2f _velocity, const sf::Vector2f _acceleration)
 	acceleration	= _acceleration;
 }
 
-CInput::CInput() {
+CInput::CInput() : Component() {
 	left	= false;
 	right	= false;
 }
 
-CInput::CInput(const bool _left, const bool _right) {
+CInput::CInput(const bool _left, const bool _right) : Component() {
 	left	= _left;
 	right	= _right;
 }

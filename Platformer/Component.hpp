@@ -20,6 +20,7 @@ public:
 	bool has;
 
 	Component();
+	Component(const bool _has);
 };
 
 class CTransform : public Component {

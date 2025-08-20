@@ -29,35 +29,49 @@ const EntityType Entity::get_type() const {
 }
 
 void Entity::transform() {
-	auto& _cmotion				= get_component<CMotion>();
-	_cmotion.velocity			+= _cmotion.acceleration;
+	auto& _ctransform = get_component<CTransform>();
 
-	auto& _ctransform			= get_component<CTransform>();
-	_ctransform.prev_position	= _ctransform.curr_position;
-	_ctransform.curr_position	+= _cmotion.velocity;
+	if (has_component<CMotion>()) {
+		auto& _cmotion		= get_component<CMotion>();
+		_cmotion.velocity	+= _cmotion.acceleration;
 
-	auto& _cshape				= get_component<CShape>();
-	_cshape.set_position(_ctransform.curr_position);
+		_ctransform.prev_position	= _ctransform.curr_position;
+		_ctransform.curr_position	+= _cmotion.velocity;
+	}
 
-	auto& _cboundingbox			= get_component<CBoundingBox>();
-	_cboundingbox.set_position(_ctransform.curr_position);
+	if (has_component<CShape>()) {
+		auto& _cshape = get_component<CShape>();
+		_cshape.set_position(_ctransform.curr_position);
+		_cshape.set_scale(_ctransform.scale);
+	}
 
-	_cshape.set_scale(_ctransform.scale);
+	if (has_component<CBoundingBox>()) {
+		auto& _cboundingbox = get_component<CBoundingBox>();
+		_cboundingbox.set_position(_ctransform.curr_position);
+	}
 }
 
 void Entity::transform_after_collision() {
-	auto& _ctransform			= get_component<CTransform>();
+	auto& _ctransform = get_component<CTransform>();
 
-	auto& _cshape				= get_component<CShape>();
-	_cshape.set_position(_ctransform.curr_position);
-
-	auto& _cboundingbox			= get_component<CBoundingBox>();
-	_cboundingbox.set_position(_ctransform.curr_position);
+	if (has_component<CShape>()) {
+		auto& _cshape = get_component<CShape>();
+		_cshape.set_position(_ctransform.curr_position);
+	}
+	
+	if (has_component<CBoundingBox>()) {
+		auto& _cboundingbox = get_component<CBoundingBox>();
+		_cboundingbox.set_position(_ctransform.curr_position);
+	}
+	
 }
 
 void Entity::update_animation() {
-	auto& _cshape = get_component<CShape>();
-	_cshape.update_animation();
+	if (has_component<CShape>()) {
+		auto& _cshape = get_component<CShape>();
+		_cshape.update_animation();
+	}
+	
 }
 
 void Entity::draw(sf::RenderWindow& game_window, bool display_shape, bool display_box) const {

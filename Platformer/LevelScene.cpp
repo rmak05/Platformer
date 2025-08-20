@@ -252,21 +252,26 @@ void LevelScene::spawn_player() {
 }
 
 void LevelScene::spawn_bullet() {
-	float direction = static_cast<float>(player_ptr->get_component<CTransform>().scale.x > 0.0f ? 1.0f : -1.0f);
+	auto& player_ctransform = player_ptr->get_component<CTransform>();
+
+	float direction = static_cast<float>(player_ctransform.scale.x > 0.0f ? 1.0f : -1.0f);
 
 	entity_ptr _bullet = add_entity(EntityType::bullet);
 	sf::Vector2f bullet_scale = bullet_config.bullet_animation.get_scale();
 	bullet_scale.x *= direction;
 	_bullet->set_component<CShape>(bullet_config.bullet_animation);
-	_bullet->set_component<CTransform>(player_ptr->get_component<CTransform>().curr_position + sf::Vector2f(32.0f * direction, -8.0f), bullet_scale);
+	_bullet->set_component<CTransform>(player_ctransform.curr_position + sf::Vector2f(32.0f * direction, -8.0f), bullet_scale);
 	_bullet->set_component<CBoundingBox>(vector_pairwise_product(static_cast<sf::Vector2f>(bullet_config.bullet_animation.get_sprite_size()), bullet_config.bullet_animation.get_scale()));
 	_bullet->set_component<CMotion>(sf::Vector2f(bullet_config.bullet_velocity * direction, 0.0f), sf::Vector2f(0.0f, 0.0f));
 
 	entity_ptr _explosion = add_entity(EntityType::decoration);
 	_explosion->set_component<CShape>(bullet_config.explosion_animation);
-	_explosion->set_component<CTransform>(player_ptr->get_component<CTransform>().curr_position + sf::Vector2f(44.0f * direction, -8.0f), bullet_config.explosion_animation.get_scale());
+	_explosion->set_component<CTransform>(player_ctransform.curr_position + sf::Vector2f(44.0f * direction, -8.0f), bullet_config.explosion_animation.get_scale());
 }
 
-// TODO: bullet might collide with player at bullet spawn
-// TODO: Jump while pressing right, just after player lands, animation doesn't change to moving.
-// Scale must be changed in transform entities i think, so maybe remove scale from animation and shift to CTransform or something
+/*
+ TODO: bullet might collide with player at bullet spawn
+ TODO: Jump while pressing right, just after player lands, animation doesn't change to moving.
+ Scale must be changed in transform entities i think, so maybe remove scale from animation and shift to CTransform or something
+ TODO: fix bounding box position of jumping animation
+*/
