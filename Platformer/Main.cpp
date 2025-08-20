@@ -1,3 +1,4 @@
+#include <stdexcept>
 #include "Game.hpp"
 
 int main() {
@@ -7,7 +8,15 @@ int main() {
 	debug::activate();
 
 	Game platformer;
-	platformer.run();
+	try {
+		platformer.run();
+	}
+	catch (const std::runtime_error& _re) {
+		print(_re.what());
+	}
+	catch (const std::exception& _e) {
+		print(_e.what());
+	}
 
 	debug::deactivate();
 	error_file.close();
