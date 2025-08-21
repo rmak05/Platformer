@@ -21,7 +21,7 @@ void Game::initialise() {
 	sf::VideoMode desktop_size	= sf::VideoMode::getDesktopMode();
 	//window_width				= (int)desktop_size.width;
 	//window_height				= (int)desktop_size.height;
-	game_window.create(sf::VideoMode(window_width, window_height), "Platformer");
+	game_window.create(sf::VideoMode(window_width, window_height), sf::String("Platformer"));
 	game_window.setKeyRepeatEnabled(false);
 	game_window.setFramerateLimit(frame_rate);
 }

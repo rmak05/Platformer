@@ -237,41 +237,61 @@ void LevelScene::transform_entities() {
 }
 
 void LevelScene::resolve_collisions() {
-	if(!player_ptr->is_active()) return;
+	// Player-Tile Collisions
+	if (player_ptr->is_active()) {
+		for (auto& tile : entity_manager.sorted_entities[static_cast<int>(EntityType::tile)]) {
+			if ((tile->get_id() == player_ptr->get_id()) || (!tile->is_active())) continue;
 
-	for (auto& entity : entity_manager.sorted_entities[static_cast<int>(EntityType::tile)]) {
-		if ((entity->get_id() == player_ptr->get_id()) || (!entity->is_active())) continue;
+			sf::Vector2f prev_overlap = Collision::prev_overlap(player_ptr, tile);
+			sf::Vector2f curr_overlap = Collision::curr_overlap(player_ptr, tile);
 
-		sf::Vector2f prev_overlap = Collision::prev_overlap(player_ptr, entity);
-		sf::Vector2f curr_overlap = Collision::curr_overlap(player_ptr, entity);
+			if ((curr_overlap.x <= 0.0f) && (curr_overlap.y <= 0.0f)) continue;
 
-		if ((curr_overlap.x <= 0.0f) && (curr_overlap.y <= 0.0f)) continue;
+			if		((prev_overlap.y > 0.0f) && (curr_overlap.x > 0.0f)) {
+				auto& _ctransform	= player_ptr->get_component<CTransform>();
+				float direction		= 0.0f;
+				if(_ctransform.curr_position.x >= _ctransform.prev_position.x) direction = (-1.0f);
+				else direction = 1.0f;
+				_ctransform.curr_position.x += curr_overlap.x * direction;
 
-		if		((prev_overlap.y > 0.0f) && (curr_overlap.x > 0.0f)) {
-			auto& _ctransform	= player_ptr->get_component<CTransform>();
-			float direction		= 0.0f;
-			if(_ctransform.curr_position.x >= _ctransform.prev_position.x) direction = (-1.0f);
-			else direction = 1.0f;
-			_ctransform.curr_position.x += curr_overlap.x * direction;
+				player_ptr->transform_after_collision();
+				tile->transform_after_collision();
+			}
+			else if ((prev_overlap.x > 0.0f) && (curr_overlap.y > 0.0f)) {
+				auto& _ctransform	= player_ptr->get_component<CTransform>();
+				float direction		= 0.0f;
+				if(_ctransform.curr_position.y >= _ctransform.prev_position.y) direction = (-1.0f);
+				else direction = 1.0f;
+				_ctransform.curr_position.y += curr_overlap.y * direction;
 
-			player_ptr->transform_after_collision();
-			entity->transform_after_collision();
+				auto& _cmotion		= player_ptr->get_component<CMotion>();
+				_cmotion.velocity.y	= 0.0f;
+
+				player_ptr->transform_after_collision();
+				tile->transform_after_collision();
+			}
+			else {
+
+			}
 		}
-		else if ((prev_overlap.x > 0.0f) && (curr_overlap.y > 0.0f)) {
-			auto& _ctransform	= player_ptr->get_component<CTransform>();
-			float direction		= 0.0f;
-			if(_ctransform.curr_position.y >= _ctransform.prev_position.y) direction = (-1.0f);
-			else direction = 1.0f;
-			_ctransform.curr_position.y += curr_overlap.y * direction;
+	}
 
-			auto& _cmotion		= player_ptr->get_component<CMotion>();
-			_cmotion.velocity.y	= 0.0f;
+	// Bullet-Tile Collisions
+	for (auto& bullet : entity_manager.sorted_entities[static_cast<int>(EntityType::bullet)]) {
+		if (!bullet->is_active()) continue;
 
-			player_ptr->transform_after_collision();
-			entity->transform_after_collision();
-		}
-		else {
+		for (auto& tile : entity_manager.sorted_entities[static_cast<int>(EntityType::tile)]) {
+			if (!tile->is_active()) continue;
 
+			sf::Vector2f curr_overlap = Collision::curr_overlap(bullet, tile);
+
+			if ((curr_overlap.x <= 0.0f) && (curr_overlap.y <= 0.0f)) continue;
+
+			if ((curr_overlap.x > 0.0f) && (curr_overlap.y > 0.0f)) {
+				bullet->set_inactive();
+
+				break;
+			}
 		}
 	}
 }
@@ -293,7 +313,6 @@ void LevelScene::spawn_player() {
 
 void LevelScene::spawn_bullet() {
 	auto& player_ctransform = player_ptr->get_component<CTransform>();
-
 	float direction = static_cast<float>(player_ctransform.scale.x > 0.0f ? 1.0f : -1.0f);
 
 	entity_ptr _bullet = add_entity(EntityType::bullet);
@@ -311,7 +330,5 @@ void LevelScene::spawn_bullet() {
 
 /*
  TODO: bullet might collide with player at bullet spawn
- TODO: Jump while pressing right, just after player lands, animation doesn't change to moving.
- Scale must be changed in transform entities i think, so maybe remove scale from animation and shift to CTransform or something
  TODO: fix bounding box position of jumping animation
 */
