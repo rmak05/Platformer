@@ -35,8 +35,6 @@ private:
 
 	void set_curr_scene(SceneId _scene_id);
 
-	void resolve_collisions();
-
 public:
 	Game();
 

@@ -236,6 +236,46 @@ void LevelScene::transform_entities() {
 	player_ptr->transform();
 }
 
+void LevelScene::resolve_collisions() {
+	if(!player_ptr->is_active()) return;
+
+	for (auto& entity : entity_manager.sorted_entities[static_cast<int>(EntityType::tile)]) {
+		if ((entity->get_id() == player_ptr->get_id()) || (!entity->is_active())) continue;
+
+		sf::Vector2f prev_overlap = Collision::prev_overlap(player_ptr, entity);
+		sf::Vector2f curr_overlap = Collision::curr_overlap(player_ptr, entity);
+
+		if ((curr_overlap.x <= 0.0f) && (curr_overlap.y <= 0.0f)) continue;
+
+		if		((prev_overlap.y > 0.0f) && (curr_overlap.x > 0.0f)) {
+			auto& _ctransform	= player_ptr->get_component<CTransform>();
+			float direction		= 0.0f;
+			if(_ctransform.curr_position.x >= _ctransform.prev_position.x) direction = (-1.0f);
+			else direction = 1.0f;
+			_ctransform.curr_position.x += curr_overlap.x * direction;
+
+			player_ptr->transform_after_collision();
+			entity->transform_after_collision();
+		}
+		else if ((prev_overlap.x > 0.0f) && (curr_overlap.y > 0.0f)) {
+			auto& _ctransform	= player_ptr->get_component<CTransform>();
+			float direction		= 0.0f;
+			if(_ctransform.curr_position.y >= _ctransform.prev_position.y) direction = (-1.0f);
+			else direction = 1.0f;
+			_ctransform.curr_position.y += curr_overlap.y * direction;
+
+			auto& _cmotion		= player_ptr->get_component<CMotion>();
+			_cmotion.velocity.y	= 0.0f;
+
+			player_ptr->transform_after_collision();
+			entity->transform_after_collision();
+		}
+		else {
+
+		}
+	}
+}
+
 void LevelScene::update_and_set_views(sf::RenderWindow& game_window) {
 	float player_x_pos = player_ptr->get_component<CTransform>().curr_position.x;
 	all_views[0].reset(sf::FloatRect(player_x_pos - static_cast<float>(WINDOW_WIDTH) / 2.0f, 0.0f, WINDOW_WIDTH, WINDOW_HEIGHT));

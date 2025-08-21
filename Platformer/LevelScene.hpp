@@ -47,6 +47,7 @@ public:
     void initialise() override;
     void do_action(Action _action) override;
     void transform_entities() override;
+    void resolve_collisions() override;
     void update_and_set_views(sf::RenderWindow& game_window) override;
 
     void spawn_player();

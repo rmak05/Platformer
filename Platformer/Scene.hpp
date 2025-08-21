@@ -44,7 +44,7 @@ public:
 	void update_added_entities();
 	void update_deleted_entities();
 	virtual void transform_entities();
-	void resolve_collisions();
+	virtual void resolve_collisions();
 
 	void update_animations();
 	virtual void update_and_set_views(sf::RenderWindow& game_window) = 0;

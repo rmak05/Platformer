@@ -74,10 +74,6 @@ void Game::set_curr_scene(SceneId _scene_id) {
 	all_scenes[static_cast<int>(curr_scene)]->initialise();
 }
 
-void Game::resolve_collisions() {
-	all_scenes[static_cast<int>(curr_scene)]->resolve_collisions();
-}
-
 void Game::run() {
 	initialise();
 

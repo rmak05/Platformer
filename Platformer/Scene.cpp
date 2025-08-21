@@ -44,9 +44,7 @@ void Scene::update_deleted_entities() {
 	entity_manager.update_deleted_entities();
 }
 
-void Scene::resolve_collisions() {
-	entity_manager.resolve_collisions();
-}
+void Scene::resolve_collisions() {}
 
 void Scene::update_animations() {
 	entity_manager.update_animations();
