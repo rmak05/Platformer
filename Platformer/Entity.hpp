@@ -26,6 +26,7 @@ enum class EntityType {
 	tile,
 	decoration,
 	bullet,
+	enemy,
 	count,
 	_default
 };

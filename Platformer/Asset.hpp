@@ -24,3 +24,7 @@ public:
 	void add_animation(const std::vector<std::string>& _args);
 	const Animation& get_animation(const std::string& _animation_name) const;
 };
+
+/*
+TODO: is it ok to return asset reference?
+*/

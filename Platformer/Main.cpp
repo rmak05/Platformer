@@ -7,8 +7,8 @@ int main() {
 	else redirect_stderr(error_file);
 	debug::activate();
 
-	Game platformer;
 	try {
+		Game platformer;
 		platformer.run();
 	}
 	catch (const std::runtime_error& _re) {
@@ -23,3 +23,7 @@ int main() {
 	
 	return 0;
 }
+
+/*
+TODO: constructor args of many classes can be made "const &", and use intitaliser like "class() : obj() {}"
+*/

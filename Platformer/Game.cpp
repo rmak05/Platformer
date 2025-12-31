@@ -27,14 +27,14 @@ void Game::initialise() {
 }
 
 void Game::config() {
-	std::string config_path = "Config/";
+	std::string config_path("Config");
 
 	// Loading Assets
 	std::ifstream assets_file;
 	std::string assets_file_name = "Assets.txt";
-	assets_file.open(config_path + assets_file_name);
+	assets_file.open(config_path + "/" + assets_file_name);
 	if (assets_file.fail()) {
-		std::cerr << "Failed to open the file " << config_path + assets_file_name << std::endl;
+		std::cerr << "Failed to open the file " << config_path + "/" + assets_file_name << std::endl;
 		std::exit(EXIT_FAILURE);
 	}
 	std::string texture_path, font_path;
