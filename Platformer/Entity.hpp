@@ -16,8 +16,7 @@ typedef std::tuple<
 	CBoundingBox,
 	CMotion,
 	CInput,
-	CLifespan,
-	CScore
+	CNPCPath
 > ComponentTuple;
 typedef std::shared_ptr<Entity> entity_ptr;
 

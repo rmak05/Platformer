@@ -11,9 +11,10 @@ class CTransform;
 class CShape;
 class CBoundingBox;
 class CMotion;
-class CLifespan;
 class CInput;
-//class CScore;
+class CNPCPath;
+class CLifespan;
+class CScore;
 
 class Component {
 public:
@@ -75,6 +76,15 @@ public:
 
 	CInput();
 	CInput(const bool _left, const bool _right);
+};
+
+class CNPCPath : public Component {
+public:
+	sf::Vector2f start_pos;
+	sf::Vector2f end_pos;
+
+	CNPCPath();
+	CNPCPath(const sf::Vector2f& _start_pos, const sf::Vector2f& _end_pos);
 };
 
 class CLifespan : public Component {

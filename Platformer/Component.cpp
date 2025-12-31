@@ -1,26 +1,22 @@
 #include "Component.hpp"
 
-Component::Component() {
-	has = false;
-}
+Component::Component() :
+has(false) {}
 
-Component::Component(const bool _has) {
-	has = _has;
-}
+Component::Component(const bool _has) :
+has(_has) {}
 
-CTransform::CTransform() : Component() {}
+CTransform::CTransform() :
+Component() {}
 
-CTransform::CTransform(const sf::Vector2f _position, const sf::Vector2f _scale) : Component() {
-	prev_position	= _position;
-	curr_position	= _position;
-	scale			= _scale;
-}
+CTransform::CTransform(const sf::Vector2f _position, const sf::Vector2f _scale) :
+prev_position(_position), curr_position(_position), scale(_scale), Component() {}
 
-CShape::CShape() : Component() {}
+CShape::CShape() :
+Component() {}
 
-CShape::CShape(const Animation _shape) : Component() {
-	shape			= _shape;
-}
+CShape::CShape(const Animation _shape) :
+shape(_shape), Component() {}
 
 void CShape::set_position(sf::Vector2f _position) {
 	shape.set_position(_position);
@@ -40,11 +36,11 @@ void CShape::draw(sf::RenderWindow& game_window, bool display_shape) const {
 	}
 }
 
-CBoundingBox::CBoundingBox() : Component() {}
+CBoundingBox::CBoundingBox() :
+Component() {}
 
-CBoundingBox::CBoundingBox(const sf::Vector2f& _size) : Component() {
-	box_size	= _size;
-	half_size	= box_size / 2.0f;
+CBoundingBox::CBoundingBox(const sf::Vector2f& _size) :
+box_size(_size), half_size(_size / 2.0f), Component() {
 	box.setSize(_size);
 	box.setOrigin(half_size);
 	box.setFillColor(sf::Color(0xffffff00));
@@ -62,19 +58,20 @@ void CBoundingBox::draw(sf::RenderWindow& game_window, bool display_box) const {
 	}
 }
 
-CMotion::CMotion() : Component() {}
+CMotion::CMotion() :
+Component() {}
 
-CMotion::CMotion(const sf::Vector2f _velocity, const sf::Vector2f _acceleration) : Component() {
-	velocity		= _velocity;
-	acceleration	= _acceleration;
-}
+CMotion::CMotion(const sf::Vector2f _velocity, const sf::Vector2f _acceleration) :
+velocity(_velocity), acceleration(_acceleration), Component() {}
 
-CInput::CInput() : Component() {
-	left	= false;
-	right	= false;
-}
+CInput::CInput() :
+left(false), right(false), Component() {}
 
-CInput::CInput(const bool _left, const bool _right) : Component() {
-	left	= _left;
-	right	= _right;
-}
+CInput::CInput(const bool _left, const bool _right) :
+left(_left), right(_right), Component() {}
+
+CNPCPath::CNPCPath() :
+Component() {}
+
+CNPCPath::CNPCPath(const sf::Vector2f& _start_pos, const sf::Vector2f& _end_pos) :
+start_pos(_start_pos), end_pos(_end_pos), Component() {}
