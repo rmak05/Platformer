@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 4.0.0)
+cmake_minimum_required(VERSION 4.4.5)
 
 project(platformer LANGUAGES CXX)
 
