@@ -45,9 +45,5 @@ add_custom_command(TARGET platformer POST_BUILD
         "${CMAKE_SOURCE_DIR}/assets"
         "$<TARGET_FILE_DIR:platformer>/assets"
 
-    # COMMAND ${CMAKE_COMMAND} -E copy
-    #     $<TARGET_RUNTIME_DLLS:platformer>
-    #     "$<TARGET_FILE_DIR:platformer>"
-
     COMMAND_EXPAND_LISTS
 )
