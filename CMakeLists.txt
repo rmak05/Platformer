@@ -21,7 +21,23 @@ FetchContent_MakeAvailable(SFML)
 
 # Executable
 add_executable(platformer
-    main.cpp
+    # main.cpp
+    src/Action.cpp
+    src/Animation.cpp
+    src/Asset.cpp
+    src/Collision.cpp
+    src/Debug.cpp
+    src/Demo.cpp
+    src/Entity.cpp
+    src/EntityManager.cpp
+    src/Game.cpp
+    src/Helper.cpp
+    src/LevelScene.cpp
+    src/Main.cpp
+    src/Scene.cpp
+)
+target_include_directories(platformer PRIVATE
+    "${CMAKE_SOURCE_DIR}/include"
 )
 target_link_libraries(platformer PRIVATE
     SFML::Graphics
