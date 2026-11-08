@@ -19,4 +19,5 @@ Constructor args of many classes can be made "const &", and use intitaliser like
 Check that files don't contain tabs (use spaces instead).
 Create a Logger (singleton class).
 See if functions can be made inline.
+Add GHA for tests and file formatting (like sorted imports, files containing only spaces no tabs)
 */
