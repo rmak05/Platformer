@@ -21,7 +21,7 @@ void Game::initialise() {
 	sf::VideoMode desktop_size	= sf::VideoMode::getDesktopMode();
 	//window_width				= (int)desktop_size.width;
 	//window_height				= (int)desktop_size.height;
-	game_window.create(sf::VideoMode(window_width, window_height), sf::String("Platformer"));
+	game_window.create(sf::VideoMode({window_width, window_height}), sf::String("Platformer"));
 	game_window.setKeyRepeatEnabled(false);
 	game_window.setFramerateLimit(frame_rate);
 }
@@ -80,47 +80,25 @@ void Game::run() {
 	while (game_window.isOpen()){
 		curr_frame++;
 
-		sf::Event _event;
-
-		while (game_window.pollEvent(_event)){
-			switch (_event.type) {
-				case sf::Event::EventType::Closed: {
-					game_window.close();
-
-					break;
-				}
-
-				case sf::Event::EventType::MouseButtonPressed: {
-					ActionName _name = all_scenes[static_cast<int>(curr_scene)]->find_action(ActionKey(InputType::mouse, static_cast<int>(_event.mouseButton.button)));
-					if (_name != ActionName::_default) all_scenes[static_cast<int>(curr_scene)]->do_action(Action(_name, ActionType::start));
-
-					break;
-				}
-
-				case sf::Event::EventType::MouseButtonReleased: {
-					ActionName _name = all_scenes[static_cast<int>(curr_scene)]->find_action(ActionKey(InputType::mouse, static_cast<int>(_event.mouseButton.button)));
-					if (_name != ActionName::_default) all_scenes[static_cast<int>(curr_scene)]->do_action(Action(_name, ActionType::end));
-
-					break;
-				}
-
-				case sf::Event::EventType::KeyPressed: {
-					ActionName _name = all_scenes[static_cast<int>(curr_scene)]->find_action(ActionKey(InputType::keyboard, static_cast<int>(_event.key.code)));
-					if (_name != ActionName::_default) all_scenes[static_cast<int>(curr_scene)]->do_action(Action(_name, ActionType::start));
-
-					break;
-				}
-
-				case sf::Event::EventType::KeyReleased: {
-					ActionName _name = all_scenes[static_cast<int>(curr_scene)]->find_action(ActionKey(InputType::keyboard, static_cast<int>(_event.key.code)));
-					if (_name != ActionName::_default) all_scenes[static_cast<int>(curr_scene)]->do_action(Action(_name, ActionType::end));
-
-					break;
-				}
-
-				default: {
-					break;
-				}
+		while (const std::optional _event = game_window.pollEvent()) {
+			if (_event->is<sf::Event::Closed>()) {
+				game_window.close();
+			}
+			else if (const auto* mouse_pressed = _event->getIf<sf::Event::MouseButtonPressed>()) {
+				ActionName _name = all_scenes[static_cast<int>(curr_scene)]->find_action(ActionKey(InputType::mouse, static_cast<int>(mouse_pressed->button)));
+				if (_name != ActionName::_default) all_scenes[static_cast<int>(curr_scene)]->do_action(Action(_name, ActionType::start));
+			}
+			else if (const auto* mouse_released = _event->getIf<sf::Event::MouseButtonReleased>()) {
+				ActionName _name = all_scenes[static_cast<int>(curr_scene)]->find_action(ActionKey(InputType::mouse, static_cast<int>(mouse_released->button)));
+				if (_name != ActionName::_default) all_scenes[static_cast<int>(curr_scene)]->do_action(Action(_name, ActionType::end));
+			}
+			else if (const auto* key_pressed = _event->getIf<sf::Event::KeyPressed>()) {
+				ActionName _name = all_scenes[static_cast<int>(curr_scene)]->find_action(ActionKey(InputType::keyboard, static_cast<int>(key_pressed->code)));
+				if (_name != ActionName::_default) all_scenes[static_cast<int>(curr_scene)]->do_action(Action(_name, ActionType::start));
+			}
+			else if (const auto* key_released = _event->getIf<sf::Event::KeyReleased>()) {
+				ActionName _name = all_scenes[static_cast<int>(curr_scene)]->find_action(ActionKey(InputType::keyboard, static_cast<int>(key_released->code)));
+				if (_name != ActionName::_default) all_scenes[static_cast<int>(curr_scene)]->do_action(Action(_name, ActionType::end));
 			}
 		}
 

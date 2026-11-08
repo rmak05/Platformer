@@ -1,15 +1,11 @@
 #pragma once
 
-#include <iostream>
-#include <fstream>
-#include <cstdlib>
 #include <vector>
 #include <SFML/Graphics.hpp>
 #include "EntityManager.hpp"
 #include "Scene.hpp"
 #include "LevelScene.hpp"
 #include "Asset.hpp"
-#include "Theme.hpp"
 #include "Helper.hpp"
 #include "Debug.hpp"
 
