@@ -24,7 +24,7 @@ add_executable(platformer
     # main.cpp
     src/Action.cpp
     src/Animation.cpp
-    src/Asset.cpp
+    src/asset_manager.cpp
     src/Collision.cpp
     src/Debug.cpp
     src/Demo.cpp
