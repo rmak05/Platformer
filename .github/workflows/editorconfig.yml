@@ -22,4 +22,4 @@ jobs:
           version: v4.0.2
 
       - name: Run EditorConfig Checker
-        run: editorconfig-checker
+        run: editorconfig-checker -format default
