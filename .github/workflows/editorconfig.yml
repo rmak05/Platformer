@@ -1,0 +1,25 @@
+name: EditorConfig Lint
+
+on:
+  push:
+    branches: ['main']
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  editorconfig:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7
+
+      - name: Install EditorConfig Checker
+        uses: editorconfig-checker/action-editorconfig-checker@main
+        with:
+          version: v4.0.2
+
+      - name: Run EditorConfig Checker
+        run: editorconfig-checker -format default
