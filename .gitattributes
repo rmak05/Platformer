@@ -1,0 +1,2 @@
+# Treat files as text when Git detects text content, and enforce LF line endings
+* text=auto eol=lf
