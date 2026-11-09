@@ -7,6 +7,9 @@
 #include <SFML/Graphics.hpp>
 #include "Animation.hpp"
 
+/**
+ * @brief Asset class which stores and manages textures, fonts and animations.
+ */
 class asset_manager{
 private:
 	std::map<std::string, sf::Texture>               textures;
