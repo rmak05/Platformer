@@ -16,5 +16,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Run EditorConfig Checker
+      - name: Install EditorConfig Checker
         uses: editorconfig-checker/action-editorconfig-checker@main
+        with:
+          version: v4.0.2
+
+      - name: Run EditorConfig Checker
+        run: editorconfig-checker
