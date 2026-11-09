@@ -8,7 +8,7 @@
 #include "Animation.hpp"
 
 /**
- * @brief Asset class which stores and manages textures, fonts and animations.
+ * @brief A manager which stores and manages assets like textures, fonts and animations.
  */
 class asset_manager{
 private:
