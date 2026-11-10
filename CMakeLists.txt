@@ -64,3 +64,4 @@ add_custom_command(TARGET platformer POST_BUILD
 
     COMMAND_EXPAND_LISTS
 )
+
