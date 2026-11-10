@@ -24,7 +24,6 @@ add_executable(platformer
     # main.cpp
     src/Action.cpp
     src/Animation.cpp
-    src/asset_manager.cpp
     src/Collision.cpp
     src/Debug.cpp
     src/Demo.cpp
@@ -35,6 +34,8 @@ add_executable(platformer
     src/LevelScene.cpp
     src/Main.cpp
     src/Scene.cpp
+    src/asset_manager.cpp
+    src/utils/logger.cpp
 )
 target_include_directories(platformer PRIVATE
     "${CMAKE_SOURCE_DIR}/include"
