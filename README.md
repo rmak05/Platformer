@@ -1,3 +1,3 @@
 # Platformer
 
-Work under progress.
+Work in progress.
