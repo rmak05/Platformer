@@ -7,7 +7,7 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-set(BUILD_SHARED_LIBS OFF CACHE BOOL "Build shared libraries" FORCE)
+set(BUILD_SHARED_LIBS ON CACHE BOOL "Build shared libraries" FORCE)
 
 # SFML
 include(FetchContent)
@@ -21,7 +21,6 @@ FetchContent_MakeAvailable(SFML)
 
 # Executable
 add_executable(platformer
-    # main.cpp
     src/Action.cpp
     src/Animation.cpp
     src/Collision.cpp
@@ -32,8 +31,8 @@ add_executable(platformer
     src/Game.cpp
     src/Helper.cpp
     src/LevelScene.cpp
-    src/Main.cpp
     src/Scene.cpp
+    src/main.cpp
     src/asset_manager.cpp
     src/utils/logger.cpp
 )
@@ -44,23 +43,21 @@ target_link_libraries(platformer PRIVATE
     SFML::Graphics
 )
 
-# Statically link GCC runtime libraries
-target_link_options(platformer PRIVATE
-    -static
-    -static-libgcc
-    -static-libstdc++
-)
-
 # Output executable to bin/
 set_target_properties(platformer PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin"
 )
 
-# Copy assets and runtime DLL dependencies after building
+# Copy assets after building
 add_custom_command(TARGET platformer POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_directory
         "${CMAKE_SOURCE_DIR}/assets"
         "$<TARGET_FILE_DIR:platformer>/assets"
-
+)
+# Copy runtime DLL dependencies after building
+add_custom_command(TARGET platformer POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy
+        "$<TARGET_RUNTIME_DLLS:platformer>"
+        "$<TARGET_FILE_DIR:platformer>"
     COMMAND_EXPAND_LISTS
 )
