@@ -32,21 +32,21 @@ void asset_manager::add_font(const std::string& _name, const std::string& _path)
 }
 
 
-void asset_manager::add_animation(const std::vector<std::string>& _args){
-    animations.emplace(
-        std::piecewise_construct,
-        std::forward_as_tuple(_args[1]),
-        std::forward_as_tuple(_args[1],
-            get_texture(_args[2]),
-            std::stof(_args[3]),
-            std::stof(_args[4]),
-            static_cast<unsigned>(std::stoi(_args[5])),
-            static_cast<unsigned>(std::stoi(_args[6])),
-            static_cast<unsigned>(std::stoi(_args[7])),
-            static_cast<bool>(std::stoi(_args[8]))
-        )
-    );
-}
+// void asset_manager::add_animation(const std::vector<std::string>& _args){
+//     animations.emplace(
+//         std::piecewise_construct,
+//         std::forward_as_tuple(_args[1]),
+//         std::forward_as_tuple(_args[1],
+//             get_texture(_args[2]),
+//             std::stof(_args[3]),
+//             std::stof(_args[4]),
+//             static_cast<unsigned>(std::stoi(_args[5])),
+//             static_cast<unsigned>(std::stoi(_args[6])),
+//             static_cast<unsigned>(std::stoi(_args[7])),
+//             static_cast<bool>(std::stoi(_args[8]))
+//         )
+//     );
+// }
 
 /*
 TODO:

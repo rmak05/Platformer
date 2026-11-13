@@ -1,13 +1,13 @@
 #include <stdexcept>
-#include "Game.hpp"
+// #include "Game.hpp"
 
 int main(){
 	try{
-		Game platformer;
-		platformer.run();
+		// Game platformer;
+		// platformer.run();
 	}
 	catch(const std::exception& _e){
-		print(_e.what());
+		// print(_e.what());
 	}
 
 	return 0;
