@@ -48,9 +48,9 @@ enum class log_level : std::uint8_t{
 class logger{
 private:
     log_level level = log_level::info;
-    static logger* logger_instance;
     std::ostream* output_stream = &std::cerr;
     std::unique_ptr<std::ofstream> file_stream;
+    static logger* logger_instance;
 
     /**
      * @brief Constructs the logger.
