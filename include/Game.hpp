@@ -1,38 +1,38 @@
-#pragma once
+// #pragma once
 
-#include <vector>
-#include <SFML/Graphics.hpp>
-#include "EntityManager.hpp"
-#include "Scene.hpp"
-#include "LevelScene.hpp"
-#include "Asset.hpp"
-#include "Helper.hpp"
-#include "Debug.hpp"
+// #include <vector>
+// #include <SFML/Graphics.hpp>
+// #include "EntityManager.hpp"
+// #include "Scene.hpp"
+// #include "LevelScene.hpp"
+// #include "Asset.hpp"
+// #include "Helper.hpp"
+// #include "Debug.hpp"
 
-class Game;
+// class Game;
 
-class Game {
-private:
-	Asset					all_assets;
-	sf::RenderWindow		game_window;
-	int						window_width;
-	int						window_height;
-	unsigned				frame_rate;
-	long long				curr_frame;
-	EntityManager			entity_manager;
-	std::vector<scene_ptr>	all_scenes;
-	SceneId					curr_scene;
-	int						curr_level;
-	// bool paused;
-	// bool running;
+// class Game {
+// private:
+// 	Asset					all_assets;
+// 	sf::RenderWindow		game_window;
+// 	int						window_width;
+// 	int						window_height;
+// 	unsigned				frame_rate;
+// 	long long				curr_frame;
+// 	EntityManager			entity_manager;
+// 	std::vector<scene_ptr>	all_scenes;
+// 	SceneId					curr_scene;
+// 	int						curr_level;
+// 	// bool paused;
+// 	// bool running;
 
-	void initialise();
-	void config();
+// 	void initialise();
+// 	void config();
 
-	void set_curr_scene(SceneId _scene_id);
+// 	void set_curr_scene(SceneId _scene_id);
 
-public:
-	Game();
+// public:
+// 	Game();
 
-	void run();
-};
+// 	void run();
+// };
