@@ -25,7 +25,6 @@ add_executable(platformer
     src/Animation.cpp
     src/Collision.cpp
     src/Debug.cpp
-    src/Demo.cpp
     src/Entity.cpp
     src/EntityManager.cpp
     src/Game.cpp
