@@ -12,17 +12,17 @@
  */
 class asset_manager{
 private:
-	std::map<std::string, sf::Texture>               textures;
-	std::map<std::string, std::unique_ptr<sf::Font>> fonts;
-	// std::map<std::string, Animation>                 animations;
+    std::map<std::string, sf::Texture>               textures;
+    std::map<std::string, std::unique_ptr<sf::Font>> fonts;
+    // std::map<std::string, Animation>                 animations;
 
 public:
-	void add_texture(const std::string& _name, const std::string& _path);
-	const sf::Texture& get_texture(const std::string& _name) const;
-	void add_font(const std::string& _name, const std::string& _path);
-	const sf::Font& get_font(const std::string& _name) const;
-	// void add_animation(const std::vector<std::string>& _args);
-	// const Animation& get_animation(const std::string& _name) const;
+    void add_texture(const std::string& _name, const std::string& _path);
+    const sf::Texture& get_texture(const std::string& _name) const;
+    void add_font(const std::string& _name, const std::string& _path);
+    const sf::Font& get_font(const std::string& _name) const;
+    // void add_animation(const std::vector<std::string>& _args);
+    // const Animation& get_animation(const std::string& _name) const;
 };
 
 inline const sf::Texture& asset_manager::get_texture(const std::string& _name) const{
