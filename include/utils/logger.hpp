@@ -24,7 +24,7 @@ enum class log_level : std::uint8_t{
 };
 
 /**
- * @brief A singleton logger supporting console and file output.
+ * @brief A singleton class supporting console and file output.
  *
  * The logger must be instantiated using one of the instantiate()
  * overloads before any logging function is called.
