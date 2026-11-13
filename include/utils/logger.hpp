@@ -277,12 +277,9 @@ void logger::log(const log_level _level, const std::format_string<args...> _line
     if(_level < logger_instance->level) return;
 
     (*logger_instance->output_stream) << std::format(
-        "{}: {}",
-        log_level_to_string(_level),
-        std::format(
-            _line,
-            std::forward<args>(_args)...
-        )
+        "{:<10}: {}",
+        std::format("[{}]", log_level_to_string(_level)),
+        std::format(_line, std::forward<args>(_args)...)
     ) << std::endl;
 }
 
