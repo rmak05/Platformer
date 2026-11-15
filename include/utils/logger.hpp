@@ -309,3 +309,8 @@ void logger::critical(const std::format_string<args...> _line, args&&... _args){
 }
 
 #endif // PERSONAL_UTILS_LOGGER_HPP
+
+/*
+TODO:
+add tests
+*/
