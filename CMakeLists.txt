@@ -36,7 +36,7 @@ add_executable(platformer
     src/utils/logger.cpp
 )
 target_include_directories(platformer PRIVATE
-    "${CMAKE_SOURCE_DIR}/include"
+    "${CMAKE_CURRENT_SOURCE_DIR}/include"
 )
 target_link_libraries(platformer PRIVATE
     SFML::Graphics
@@ -44,13 +44,13 @@ target_link_libraries(platformer PRIVATE
 
 # Output executable to bin/
 set_target_properties(platformer PROPERTIES
-    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin"
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/bin"
 )
 
 # Copy assets after building
 add_custom_command(TARGET platformer POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_directory
-        "${CMAKE_SOURCE_DIR}/assets"
+        "${CMAKE_CURRENT_SOURCE_DIR}/assets"
         "$<TARGET_FILE_DIR:platformer>/assets"
 )
 # Copy runtime DLL dependencies after building
