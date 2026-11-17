@@ -1,6 +1,7 @@
 #include <format>
 #include <iostream>
 #include <utility>
+
 #include "asset_manager.hpp"
 
 void asset_manager::add_texture(const std::string& _name, const std::string& _path){

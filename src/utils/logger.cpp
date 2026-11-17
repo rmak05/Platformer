@@ -1,6 +1,7 @@
 #include <format>
 #include <fstream>
 #include <utility>
+
 #include "utils/logger.hpp"
 
 logger* logger::logger_instance = nullptr;
