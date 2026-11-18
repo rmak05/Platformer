@@ -1,35 +1,79 @@
-// #pragma once
+#ifndef PLATFORMER_ANIMATION_HPP
+#define PLATFORMER_ANIMATION_HPP
 
-// #include <SFML/Graphics.hpp>
+#include <cstdint>
+#include <string>
+#include <vector>
 
-// class Animation;
+#include <SFML/Graphics.hpp>
 
-// class Animation {
-// private:
-// 	sf::Sprite		sprite;			// Maybe can use rectangle instead
-// 	std::string		name;			// can use enum
-// 	sf::Vector2u	size;			// size of the sprite sheet (columns x rows)
-// 	sf::Vector2u	sprite_size;	// size of each sprite in pixels (assuming all sprites have equal size)
-// 	unsigned		sprite_count;
-// 	unsigned		duration;		// number of frames before changing current sprite
-// 	unsigned		curr_frame;		// total frames = sprite_count * speed
-// 	bool			loop;
-// 	bool			end;
+class animation{
+private:
+    typedef std::uint16_t small_int;
 
-// public:
-// 	Animation();
-// 	Animation(const std::string _name, const sf::Texture& _texture, const float _scale_x, const float _scale_y, const unsigned _num_rows, const unsigned _num_columns, const unsigned _duration, const bool _loop);
+    struct frame{
+        sf::Vector2<small_int> position;
+        sf::Vector2<small_int> size;
 
-// 	std::string get_name() const;
-// 	sf::Sprite get_sprite() const;
-// 	sf::Vector2f get_scale() const;
-// 	sf::Vector2u get_size() const;
-// 	sf::Vector2u get_sprite_size() const;
-// 	void set_position(sf::Vector2f _position);
-// 	void set_position(float _pos_x, float _pos_y);
-// 	void set_scale(sf::Vector2f _scale);
-// 	void set_scale(float _scale_x, float _scale_y);
-// 	void update();
-// 	bool has_ended() const;
-// 	void draw(sf::RenderWindow& game_window) const;
-// };
+        frame() = default;
+        frame(const sf::Vector2<small_int> _position, const sf::Vector2<small_int> _size);
+    };
+
+    std::string name;
+    sf::Sprite sprite;
+    std::vector<frame> frames; // while loading textures, take its block_size as input as well
+                               // sprite sheet could have block size of 16px while game block is 64px
+                               // these frame values should be wrt to 16px, normalize this at input stage only
+                               // the config file can contain coordinates like 0, 1, 2 but after normalization,
+                               // these values must be 0, 16, 32 . Also instead of using
+                               // GAME_TEXTURE_BLOCK_SIZE, expected block size can also be taken in the input,
+                               //so we are basically taking scale as input
+    small_int curr_frame_index{0};
+    small_int frame_duration{1}; // in frames (in game loop frames like 60, 120)
+    small_int clock{0};
+    bool looping{true};
+    bool finished{false};
+
+    void set_frame();
+
+public:
+    animation() = default;
+    animation(
+        const std::string& _name,
+        const sf::Texture& _texture,
+        const float _texture_scale,
+        const bool _looping,
+        const small_int _frame_duration,
+        const std::vector<frame>& _frames
+    );
+
+    std::string get_name() const;
+    bool has_finished() const;
+
+    void set_position(const sf::Vector2f _position);
+    void set_scale(const sf::Vector2f _scale);
+    void update();
+    void draw(sf::RenderWindow& _window) const;
+};
+
+inline std::string animation::get_name() const{
+    return name;
+}
+
+inline bool animation::has_finished() const{
+    return finished;
+}
+
+inline void animation::set_position(const sf::Vector2f _position){
+    sprite.setPosition(_position);
+}
+
+inline void animation::set_scale(const sf::Vector2f _scale){
+    sprite.setScale(_scale);
+}
+
+inline void animation::draw(sf::RenderWindow& _window) const{
+    _window.draw(sprite);
+}
+
+#endif // PLATFORMER_ANIMATION_HPP

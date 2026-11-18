@@ -1,88 +1,52 @@
-// #include "Animation.hpp"
+#include <cmath>
+#include <stdexcept>
 
-// Animation::Animation() {
-//     sprite_count    = 0u;
-//     duration        = 0u;
-//     curr_frame      = 0u;
-//     loop            = true;
-//     end             = false;
-// }
+#include "animation.hpp"
 
-// Animation::Animation(const std::string _name, const sf::Texture& _texture, const float _scale_x, const float _scale_y, const unsigned _num_rows, const unsigned _num_columns, const unsigned _duration, const bool _loop) : end(false) {
-//     name            = _name;
-//     size            = sf::Vector2u(_num_columns, _num_rows);
-//     sprite_count    = _num_rows * _num_columns;
-//     duration        = _duration;
-//     curr_frame      = sprite_count * duration - 1u;
-//     loop            = _loop;
-//     sprite_size     = sf::Vector2u(_texture.getSize().x / _num_columns, _texture.getSize().y / _num_rows);
-//     sprite.setTexture(_texture);
-//     sprite.setScale(_scale_x, _scale_y);
-//     sprite.setOrigin(static_cast<sf::Vector2f>(sprite_size) / 2.0f);
-// }
+animation::frame::frame(const sf::Vector2<small_int> _position, const sf::Vector2<small_int> _size) :
+position(_position), size(_size){}
 
-// std::string Animation::get_name() const {
-//     return name;
-// }
+void animation::set_frame(){
+    frame& curr_frame = frames[curr_frame_index];
 
-// sf::Sprite Animation::get_sprite() const {
-//     return sprite;
-// }
+    sprite.setTextureRect(sf::IntRect(
+        static_cast<sf::Vector2i>(curr_frame.position),
+        static_cast<sf::Vector2i>(curr_frame.size)
+    ));
+    sprite.setOrigin(sprite.getLocalBounds().size / 2.0f);
+}
 
-// sf::Vector2f Animation::get_scale() const {
-//     return sprite.getScale();
-// }
+animation::animation(
+    const std::string& _name,
+    const sf::Texture& _texture,
+    const float _texture_scale,
+    const bool _looping,
+    const small_int _frame_duration,
+    const std::vector<frame>& _frames
+) : name(_name), sprite(_texture), frames(_frames), frame_duration{_frame_duration}, looping{_looping}{
+    if(!std::isfinite(_texture_scale) || !_texture_scale){
+        throw std::invalid_argument("`_texture_scale` must be finite and non-zero.");
+    }
+    if(_frame_duration <= 0) throw std::invalid_argument("`_frame_duration` must be positive.");
+    if(frames.empty()) throw std::invalid_argument("`_frames` cannot be empty.");
 
-// sf::Vector2u Animation::get_size() const {
-//     return size;
-// }
+    set_frame();
+    sprite.setScale({_texture_scale, _texture_scale});
+}
 
-// sf::Vector2u Animation::get_sprite_size() const {
-//     return sprite_size;
-// }
+void animation::update(){
+    if(finished) return;
 
-// void Animation::set_position(sf::Vector2f _position) {
-//     sprite.setPosition(_position);
-// }
+    if(clock >= frame_duration){
+        if(!looping && curr_frame_index == static_cast<small_int>(frames.size()) - 1){
+            finished = true;
+            return;
+        }
 
-// void Animation::set_position(float _pos_x, float _pos_y) {
-//     sprite.setPosition(_pos_x, _pos_y);
-// }
+        clock = 0;
+        curr_frame_index = (curr_frame_index + 1) % frames.size();
+    }
 
-// void Animation::set_scale(sf::Vector2f _scale) {
-//     sprite.setScale(_scale);
-// }
-
-// void Animation::set_scale(float _scale_x, float _scale_y) {
-//     sprite.setScale(_scale_x, _scale_y);
-// }
-
-// void Animation::update() {
-//     if (duration == 0u || end) return;
-
-//     int previous_sprite_number = curr_frame / duration;
-
-//     curr_frame++;
-//     curr_frame %= (sprite_count * duration);
-
-//     if (!loop && curr_frame == sprite_count * duration - 1u) {
-//         end = true;
-//     }
-
-//     int sprite_number = curr_frame / duration;
-//     if (sprite_number == previous_sprite_number) return;
-
-//     int rows                    = static_cast<int>(size.y);
-//     int columns                 = static_cast<int>(size.x);
-//     sf::Vector2i _sprite_size   = static_cast<sf::Vector2i>(sprite_size);
-
-//     sprite.setTextureRect(sf::IntRect((sprite_number % columns) * _sprite_size.x, (sprite_number / columns) * _sprite_size.y, _sprite_size.x, _sprite_size.y));
-// }
-
-// bool Animation::has_ended() const {
-//     return end;
-// }
-
-// void Animation::draw(sf::RenderWindow& game_window) const {
-//     game_window.draw(sprite);
-// }
+    set_frame();
+    clock++;
+}
