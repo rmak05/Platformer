@@ -22,13 +22,13 @@ public:
 private:
     std::string name;
     sf::Sprite sprite;
-    std::vector<frame> frames; // while loading textures, take its block_size as input as well
-                               // sprite sheet could have block size of 16px while game block is 64px
-                               // these frame values should be wrt to 16px, normalize this at input stage only
-                               // the config file can contain coordinates like 0, 1, 2 but after normalization,
-                               // these values must be 0, 16, 32 . Also instead of using
-                               // GAME_TEXTURE_BLOCK_SIZE, expected block size can also be taken in the input,
-                               //so we are basically taking scale as input
+    std::vector<frame> frames;  // while loading textures, take its block_size as input as well
+                                // sprite sheet could have block size of 16px while game block is 64px
+                                // these frame values should be wrt to 16px, normalize this at input stage only
+                                // the config file can contain coordinates like 0, 1, 2 but after
+                                // normalization, these values must be 0, 16, 32 . Also instead of using
+                                // GAME_TEXTURE_BLOCK_SIZE, expected block size can also be taken in the input,
+                                // so we are basically taking scale as input
     small_int curr_frame_index{0};
     small_int frame_duration{1}; // in frames (in game loop frames like 60, 120)
     small_int clock{0};
