@@ -54,12 +54,15 @@ void asset_manager::add_animation(
 
     animations.emplace_hint(
         hint_ptr,
-        _name,
-        _name,
-        get_texture(_texture_name),
-        _texture_scale,
-        _looping,
-        _frame_duration,
-        _frames
+        std::piecewise_construct,
+        std::forward_as_tuple(_name),
+        std::forward_as_tuple(
+            _name,
+            get_texture(_texture_name),
+            _texture_scale,
+            _looping,
+            _frame_duration,
+            _frames
+        )
     );
 }

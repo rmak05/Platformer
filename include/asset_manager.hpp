@@ -9,6 +9,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "animation.hpp"
+#include "utils/logger.hpp"
 
 /**
  * @brief A manager which stores and manages assets like textures, fonts and animations.
