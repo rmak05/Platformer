@@ -7,3 +7,7 @@ cmake --build build
 
 # Run
 ./build/platformer.exe
+
+
+# Push all git commits individually
+$b = git branch --show-current; git rev-list --reverse "origin/$b..HEAD" | % { git push origin "${_}:refs/heads/$b" }
