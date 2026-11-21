@@ -1,55 +1,65 @@
-#include <format>
-#include <iostream>
 #include <utility>
 
 #include "asset_manager.hpp"
+#include "utils/logger.hpp"
 
 void asset_manager::add_texture(const std::string& _name, const std::string& _path){
-    sf::Texture texture;
-    if(!texture.loadFromFile(_path)){
-        std::cerr << std::format(
-            "Unable to load the texture {} from {}\n",
-            _name,
-            _path
-        );
+    auto hint_ptr = textures.lower_bound(_name);
+
+    if(hint_ptr != textures.end() && hint_ptr->first == _name){
+        logger::warning("A texture with name {} already exists.", _name);
         return;
     }
 
-    textures.insert_or_assign(_name, std::move(texture));
+    sf::Texture texture;
+    if(!texture.loadFromFile(_path)){
+        logger::warning("Unable to load the texture {} from {}", _name, _path);
+        return;
+    }
+
+    textures.emplace_hint(hint_ptr, _name, std::move(texture));
 }
 
 void asset_manager::add_font(const std::string& _name, const std::string& _path){
-    std::unique_ptr<sf::Font> font_ptr = std::make_unique<sf::Font>();
-    if(!font_ptr->openFromFile(_path)){
-        std::cerr << std::format(
-            "Unable to load the font {} from {}\n",
-            _name,
-            _path
-        );
+    auto hint_ptr = fonts.lower_bound(_name);
+
+    if(hint_ptr != fonts.end() && hint_ptr->first == _name){
+        logger::warning("A font with name {} already exists.", _name);
         return;
     }
 
-    fonts.insert_or_assign(_name, std::move(font_ptr));
+    sf::Font font;
+    if(!font.openFromFile(_path)){
+        logger::warning("Unable to load the font {} from {}", _name, _path);
+        return;
+    }
+
+    fonts.emplace_hint(hint_ptr, _name, std::move(font));
 }
 
+void asset_manager::add_animation(
+    const std::string& _name,
+    const std::string& _texture_name,
+    const float _texture_scale,
+    const bool _looping,
+    const animation::small_int _frame_duration,
+    const std::vector<animation::frame>& _frames
+){
+    auto hint_ptr = animations.lower_bound(_name);
 
-// void asset_manager::add_animation(const std::vector<std::string>& _args){
-//     animations.emplace(
-//         std::piecewise_construct,
-//         std::forward_as_tuple(_args[1]),
-//         std::forward_as_tuple(_args[1],
-//             get_texture(_args[2]),
-//             std::stof(_args[3]),
-//             std::stof(_args[4]),
-//             static_cast<unsigned>(std::stoi(_args[5])),
-//             static_cast<unsigned>(std::stoi(_args[6])),
-//             static_cast<unsigned>(std::stoi(_args[7])),
-//             static_cast<bool>(std::stoi(_args[8]))
-//         )
-//     );
-// }
+    if(hint_ptr != animations.end() && hint_ptr->first == _name){
+        logger::warning("An animation with name {} already exists.", _name);
+        return;
+    }
 
-/*
-TODO:
-improve add_animation after improving animation class
-*/
+    animations.emplace_hint(
+        hint_ptr,
+        _name,
+        _name,
+        get_texture(_texture_name),
+        _texture_scale,
+        _looping,
+        _frame_duration,
+        _frames
+    );
+}

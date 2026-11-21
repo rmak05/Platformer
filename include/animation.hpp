@@ -8,7 +8,7 @@
 #include <SFML/Graphics.hpp>
 
 class animation{
-private:
+public:
     typedef std::uint16_t small_int;
 
     struct frame{
@@ -19,6 +19,7 @@ private:
         frame(const sf::Vector2<small_int> _position, const sf::Vector2<small_int> _size);
     };
 
+private:
     std::string name;
     sf::Sprite sprite;
     std::vector<frame> frames; // while loading textures, take its block_size as input as well
