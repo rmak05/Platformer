@@ -32,6 +32,7 @@ add_executable(platformer
     src/action.cpp
     src/animation.cpp
     src/asset_manager.cpp
+    src/component.cpp
     src/main.cpp
     src/utils/logger.cpp
 )
