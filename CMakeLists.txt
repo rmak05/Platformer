@@ -21,7 +21,6 @@ FetchContent_MakeAvailable(SFML)
 
 # Executable
 add_executable(platformer
-    src/Action.cpp
     src/Collision.cpp
     src/Debug.cpp
     src/Entity.cpp
@@ -30,6 +29,7 @@ add_executable(platformer
     src/Helper.cpp
     src/LevelScene.cpp
     src/Scene.cpp
+    src/action.cpp
     src/animation.cpp
     src/asset_manager.cpp
     src/main.cpp
