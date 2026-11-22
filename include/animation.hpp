@@ -38,7 +38,6 @@ private:
     void set_frame();
 
 public:
-    animation() = default;
     animation(
         const std::string& _name,
         const sf::Texture& _texture,
