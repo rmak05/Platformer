@@ -5,7 +5,7 @@
 
 class component{
 public:
-    bool has = false;
+    bool has{false};
 
     component() = default;
     component(const bool _has);
@@ -57,8 +57,8 @@ public:
 
 class cinput : public component{
 public:
-    bool left = false;
-    bool right = false;
+    bool left{false};
+    bool right{false};
 
     cinput() = default;
     cinput(const bool _left, const bool _right);

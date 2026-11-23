@@ -37,8 +37,8 @@ enum class input_type : std::uint8_t{
 class action{
 public:
     struct key{
-        input_type type = input_type::notset;
-        std::int32_t code = -1;
+        input_type type{input_type::notset};
+        std::int32_t code{-1};
 
         key() = default;
         key(const input_type _type, const std::int32_t _code);
@@ -47,8 +47,8 @@ public:
     };
 
 private:
-    action_name name = action_name::notset;
-    action_type type = action_type::notset;
+    action_name name{action_name::notset};
+    action_type type{action_type::notset};
 
 public:
     action() = default;

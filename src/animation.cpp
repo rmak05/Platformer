@@ -4,7 +4,7 @@
 #include "animation.hpp"
 
 animation::frame::frame(const sf::Vector2<small_int> _position, const sf::Vector2<small_int> _size) :
-position(_position), size(_size){}
+position{_position}, size{_size}{}
 
 void animation::set_frame(){
     frame& curr_frame = frames[curr_frame_index];
@@ -23,7 +23,7 @@ animation::animation(
     const bool _looping,
     const small_int _frame_duration,
     const std::vector<frame>& _frames
-) : name(_name), sprite(_texture), frames(_frames), frame_duration{_frame_duration}, looping{_looping}{
+) : name(_name), sprite{_texture}, frames(_frames), frame_duration{_frame_duration}, looping{_looping}{
     if(!std::isfinite(_texture_scale) || !_texture_scale){
         throw std::invalid_argument("`_texture_scale` must be finite and non-zero.");
     }
