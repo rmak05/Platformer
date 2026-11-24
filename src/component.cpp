@@ -1,14 +1,14 @@
 #include "config.hpp"
 #include "component.hpp"
 
-component::component(const bool _has) :
-has{_has}{}
+component::component(const bool _active) :
+active{_active}{}
 
 ctransform::ctransform(const sf::Vector2f _position, const sf::Vector2f _scale) :
-prev_position{_position}, curr_position{_position}, scale{_scale}{}
+prev_position{_position}, curr_position{_position}, scale{_scale}, component{true}{}
 
 cvisual::cvisual(const animation& _animation) :
-drawable{_animation}{}
+drawable{_animation}, component{true}{}
 
 // void cvisual::set_position(sf::Vector2f _position) {
 // 	shape.set_position(_position);
@@ -29,7 +29,7 @@ drawable{_animation}{}
 // }
 
 cbounding_box::cbounding_box(const sf::Vector2f _box_size) :
-box_size{_box_size}, half_box_size{_box_size / 2.0f}{
+box_size{_box_size}, half_box_size{_box_size / 2.0f}, component{true}{
     box.setSize(box_size);
     box.setOrigin(half_box_size);
     box.setFillColor(sf::Color::Transparent);
@@ -48,7 +48,7 @@ box_size{_box_size}, half_box_size{_box_size / 2.0f}{
 // }
 
 cmotion::cmotion(const sf::Vector2f _velocity, const sf::Vector2f _acceleration) :
-velocity{_velocity}, acceleration{_acceleration}{}
+velocity{_velocity}, acceleration{_acceleration}, component{true}{}
 
 cinput::cinput(const bool _left, const bool _right) :
-left{_left}, right{_right}{}
+left{_left}, right{_right}, component{true}{}

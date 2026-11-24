@@ -1,14 +1,16 @@
 #ifndef PLATFORMER_COMPONENT_HPP
 #define PLATFORMER_COMPONENT_HPP
 
+#include <optional>
+
 #include "animation.hpp"
 
 class component{
 public:
-    bool has{false};
+    bool active{false};
 
     component() = default;
-    component(const bool _has);
+    component(const bool _active);
 };
 
 class ctransform : public component{
@@ -23,8 +25,9 @@ public:
 
 class cvisual : public component{
 public:
-    animation drawable;
+    std::optional<animation> drawable;
 
+    cvisual() = default;
     cvisual(const animation& _animation);
 
     // void set_position(const sf::Vector2f _position);

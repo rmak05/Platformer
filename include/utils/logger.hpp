@@ -86,7 +86,7 @@ private:
      * The message is prefixed with its severity level and written to
      * the configured output stream.
      *
-     * @tparam args Types of the formatting arguments.
+     * @tparam Targs Types of the formatting arguments.
      *
      * @param _level Severity level of the message.
      * @param _line Compile-time checked format string.
@@ -95,8 +95,8 @@ private:
      * @throws std::runtime_error If the logger has not been instantiated.
      * @throws std::format_error If formatting fails.
      */
-    template<typename... args>
-    static void log(const log_level _level, const std::format_string<args...> _line, args&&... _args);
+    template<typename... Targs>
+    static void log(const log_level _level, const std::format_string<Targs...> _line, Targs&&... _args);
 
 public:
     /**
@@ -192,72 +192,72 @@ public:
     /**
      * @brief Logs a debug-level message.
      *
-     * @tparam args Types of the formatting arguments.
+     * @tparam Targs Types of the formatting arguments.
      * @param _line Compile-time checked format string.
      * @param _args Arguments used to format the message.
      *
      * @throws std::runtime_error If the logger has not been instantiated.
      */
-    template<typename... args>
-    static void debug(const std::format_string<args...> _line, args&&... _args);
+    template<typename... Targs>
+    static void debug(const std::format_string<Targs...> _line, Targs&&... _args);
 
     /**
      * @brief Logs an info-level message.
      *
-     * @tparam args Types of the formatting arguments.
+     * @tparam Targs Types of the formatting arguments.
      * @param _line Compile-time checked format string.
      * @param _args Arguments used to format the message.
      *
      * @throws std::runtime_error If the logger has not been instantiated.
      */
-    template<typename... args>
-    static void info(const std::format_string<args...> _line, args&&... _args);
+    template<typename... Targs>
+    static void info(const std::format_string<Targs...> _line, Targs&&... _args);
 
     /**
      * @brief Logs a warning-level message.
      *
-     * @tparam args Types of the formatting arguments.
+     * @tparam Targs Types of the formatting arguments.
      * @param _line Compile-time checked format string.
      * @param _args Arguments used to format the message.
      *
      * @throws std::runtime_error If the logger has not been instantiated.
      */
-    template<typename... args>
-    static void warning(const std::format_string<args...> _line, args&&... _args);
+    template<typename... Targs>
+    static void warning(const std::format_string<Targs...> _line, Targs&&... _args);
 
     /**
      * @brief Logs an error-level message.
      *
-     * @tparam args Types of the formatting arguments.
+     * @tparam Targs Types of the formatting arguments.
      * @param _line Compile-time checked format string.
      * @param _args Arguments used to format the message.
      *
      * @throws std::runtime_error If the logger has not been instantiated.
      */
-    template<typename... args>
-    static void error(const std::format_string<args...> _line, args&&... _args);
+    template<typename... Targs>
+    static void error(const std::format_string<Targs...> _line, Targs&&... _args);
 
     /**
      * @brief Logs a critical-level message.
      *
-     * @tparam args Types of the formatting arguments.
+     * @tparam Targs Types of the formatting arguments.
      * @param _line Compile-time checked format string.
      * @param _args Arguments used to format the message.
      *
      * @throws std::runtime_error If the logger has not been instantiated.
      */
-    template<typename... args>
-    static void critical(const std::format_string<args...> _line, args&&... _args);
+    template<typename... Targs>
+    static void critical(const std::format_string<Targs...> _line, Targs&&... _args);
 };
 
 inline constexpr std::string_view logger::log_level_to_string(const log_level _level){
     switch(_level){
-        case log_level::notset  : return "NOTSET";
-        case log_level::debug   : return "DEBUG";
-        case log_level::info    : return "INFO";
-        case log_level::warning : return "WARNING";
-        case log_level::error   : return "ERROR";
-        case log_level::critical: return "CRITICAL";
+        case log_level::notset   : return "NOTSET";
+        case log_level::debug    : return "DEBUG";
+        case log_level::info     : return "INFO";
+        case log_level::warning  : return "WARNING";
+        case log_level::error    : return "ERROR";
+        case log_level::critical : return "CRITICAL";
     }
 
     throw std::logic_error(std::format("Unknown value of `log_level`: {}", static_cast<int>(_level)));
@@ -271,41 +271,41 @@ inline void logger::assert_is_instantiated(){
     if(!is_instantiated()) throw std::runtime_error("`logger` is not instantiated.");
 }
 
-template<typename... args>
-void logger::log(const log_level _level, const std::format_string<args...> _line, args&&... _args){
+template<typename... Targs>
+void logger::log(const log_level _level, const std::format_string<Targs...> _line, Targs&&... _args){
     assert_is_instantiated();
     if(_level < logger_instance->level) return;
 
     (*logger_instance->output_stream) << std::format(
         "{:<10}: {}",
         std::format("[{}]", log_level_to_string(_level)),
-        std::format(_line, std::forward<args>(_args)...)
+        std::format(_line, std::forward<Targs>(_args)...)
     ) << std::endl;
 }
 
-template<typename... args>
-void logger::debug(const std::format_string<args...> _line, args&&... _args){
-    log(log_level::debug, _line, std::forward<args>(_args)...);
+template<typename... Targs>
+void logger::debug(const std::format_string<Targs...> _line, Targs&&... _args){
+    log(log_level::debug, _line, std::forward<Targs>(_args)...);
 }
 
-template<typename... args>
-void logger::info(const std::format_string<args...> _line, args&&... _args){
-    log(log_level::info, _line, std::forward<args>(_args)...);
+template<typename... Targs>
+void logger::info(const std::format_string<Targs...> _line, Targs&&... _args){
+    log(log_level::info, _line, std::forward<Targs>(_args)...);
 }
 
-template<typename... args>
-void logger::warning(const std::format_string<args...> _line, args&&... _args){
-    log(log_level::warning, _line, std::forward<args>(_args)...);
+template<typename... Targs>
+void logger::warning(const std::format_string<Targs...> _line, Targs&&... _args){
+    log(log_level::warning, _line, std::forward<Targs>(_args)...);
 }
 
-template<typename... args>
-void logger::error(const std::format_string<args...> _line, args&&... _args){
-    log(log_level::error, _line, std::forward<args>(_args)...);
+template<typename... Targs>
+void logger::error(const std::format_string<Targs...> _line, Targs&&... _args){
+    log(log_level::error, _line, std::forward<Targs>(_args)...);
 }
 
-template<typename... args>
-void logger::critical(const std::format_string<args...> _line, args&&... _args){
-    log(log_level::critical, _line, std::forward<args>(_args)...);
+template<typename... Targs>
+void logger::critical(const std::format_string<Targs...> _line, Targs&&... _args){
+    log(log_level::critical, _line, std::forward<Targs>(_args)...);
 }
 
 #endif // PERSONAL_UTILS_LOGGER_HPP

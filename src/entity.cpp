@@ -1,31 +1,9 @@
-// #include "Entity.hpp"
-
-// Entity::Entity() {
-// 	active	= false;
-// 	id		= 0u;
-// 	type	= EntityType::_default;
-// }
+#include "entity.hpp"
 
 // Entity::Entity(const unsigned _id, const EntityType _type) {
 // 	active	= true;
 // 	id		= _id;
 // 	type	= _type;
-// }
-
-// bool Entity::is_active() const {
-// 	return active;
-// }
-
-// void Entity::set_inactive() {
-// 	active = false;
-// }
-
-// const unsigned Entity::get_id() const {
-// 	return id;
-// }
-
-// const EntityType Entity::get_type() const {
-// 	return type;
 // }
 
 // void Entity::transform() {
