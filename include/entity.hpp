@@ -105,3 +105,8 @@ inline void entity::remove_component(){
 }
 
 #endif // PLATFORMER_ENTITY_HPP
+
+/*
+TODO:
+check commented code.
+*/
